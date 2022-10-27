@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.example.board.service.impl.BoardMapper">
+
+	<resultMap id="board" type="egovframework.example.board.service.BoardVO">
+		<result property="title" column="content_title"/>
+		<result property="content" column="content_content"/>
+		<result property="userNo" column="user_no"/>
+		<result property="userName" column="user_name"/>
+		<result property="contentNo" column="content_no"/>
+	</resultMap>
+
+	<insert id="insertContent" parameterType="BoardVO">
+
+			INSERT INTO
+				BOARD.CONTENTS
+			SET
+				CONTENT_TITLE = #{title}
+				,CONTENT_CONTENT = #{content}
+				,CONTENT_HIT = 1
+				,USER_NO = #{userNo}
+
+	</insert>
+
+	<update id="updateContent" parameterType = "BoardVO">
+
+			UPDATE
+				BOARD.CONTENTS
+			SET
+				CONTENT_TITLE = #{title}
+				,CONTENT_REGDATE = CURRENT_TIMESTAMP
+			WHERE
+				CONTENT_NO = #{contentNo}
+
+	</update>
+
+	<delete id="deleteContent">
+
+			DELETE FROM BOARD.CONTENTS
+			WHERE CONTENT_NO = #{contentNo}
+
+	</delete>
+
+	<select id="selectBoardList" resultMap="board">
+
+			SELECT
+				 CT.CONTENT_NO
+				,CT.CONTENT_TITLE
+				,CT.CONTENT_CONTENT
+				,CT.CONTENT_HIT
+				,DATE_FORMAT(CONTENT_REGDATE, '%x-%c-%d') AS 'date'
+				,US.USER_NAME
+			FROM
+				BOARD.CONTENTS CT
+			INNER JOIN
+				BOARD.USERS US
+			ON
+				CT.CONTENT_USER_NO = US.SEQ_USER_NO
+			ORDER BY
+				CT.CONTENT_NO DESC;
+
+	</select>
+	
+	
+	<select id = "loginCheck" parameterType = "BoardVO" resultType = "int">
+		
+		SELECT
+			user_id
+			,user_password
+		FROM board.users
+		WHERE user_id = #{userId}
+		AND user_password = #{password}
+	
+	</select>
+	
+	
+	
+	<!--  
+	<select id="selectBoardList" parameterType="searchVO" resultType="egovMap">
+
+			SELECT
+				ID, NAME, DESCRIPTION, USE_YN, REG_USER
+			FROM SAMPLE
+			WHERE 1=1
+			<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 0">
+						AND	ID LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 1">
+						AND	NAME LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if>
+			ORDER BY ID ASC
+			LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+	</select>
+
+	<select id="selectBoardListTotCnt" parameterType="searchVO" resultType="int">
+
+			SELECT COUNT(*) totcnt
+			FROM SAMPLE
+			WHERE 1=1
+			<if test="searchKeyword != null and searchKeyword != ''">
+		        <choose>
+		            <when test="searchCondition == 0">
+						AND ID LIKE '%' || #{searchKeyword} || '%'
+					</when>
+		            <when test="searchCondition == 1">
+						AND	NAME LIKE '%' || #{searchKeyword} || '%'
+					</when>
+				</choose>
+			</if>
+	</select>
+	-->
+	
+</mapper>

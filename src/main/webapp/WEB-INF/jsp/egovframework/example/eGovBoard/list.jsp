@@ -12,26 +12,20 @@
 	<div id="wrap">
 
 		<div id="container" class="clearfix">
-			<div id="aside">
-				<h1>게시판</h1>
-			</div>
-			<!-- //aside -->
-
 			<div id="content">
+				<h1>게시판</h1>
 				<div id="board">
 					<div id="list">
-						<form action="${pageContext.request.contextPath}/board/search2" method="get">
-							<div class="form-group text-right">
-								<select name = 'content'>
-									<option value=''>선택하세요</option>
-									<option value='title'>제목</option>
-									<option value='name'>글쓴이</option>
-								</select>
-								<input type="text" name = "keyword">
-								<button type="submit" id=btn_search>검색</button>
-							</div>
-						</form>
-						
+						<div class="form-group text-right">
+							<select name = 'content'>
+								<option value='' selected = 'selected'>선택하세요</option>
+								<option value='title'>제목</option>
+								<option value='name'>글쓴이</option>
+							</select>
+							<input type="text" name = "keyword">
+							<button type="submit" id=btn_search>검색</button>
+						</div>
+					
 						<table border = '1'>
 							<thead>
 								<tr>
@@ -46,7 +40,7 @@
 							<tbody>
 								<tr>
 									<td>1</td>
-									<td><a href="">제목</a></td>
+									<td><a href="${pageContext.request.contextPath}/readContent.do">제목</a></td>
 									<td>작성자</td>
 									<td>1</td>
 									<td>2022.10.27.</td>
@@ -55,11 +49,13 @@
 								
 							</tbody>
 						</table>
-			
 					</div>
 					<!-- //list -->
 				</div>
 				<!-- //board -->
+				
+				<a id="btn_add" href="${pageContext.request.contextPath}/writeForm.do">등록</a>
+				
 			</div>
 			<!-- //content  -->
 
