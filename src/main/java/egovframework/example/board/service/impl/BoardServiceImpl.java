@@ -20,7 +20,6 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
-import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -56,12 +55,12 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	// private BoardDAO sampleDAO;
 	
 	// TODO mybatis 사용
-	@Resource(name="sampleMapper")
+	@Resource(name="boardMapper")
 	private BoardMapper boardDAO;
 
 	/** ID Generation */
-	@Resource(name = "egovIdGnrService")
-	private EgovIdGnrService egovIdGnrService;
+	//@Resource(name = "egovIdGnrService")
+	//private EgovIdGnrService egovIdGnrService;
 
 	/**
 	 * 글을 등록한다.
@@ -113,7 +112,7 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	 * @return 글 목록
 	 * @exception Exception
 	 */
-	public List<?> selectBoardList(BoardVO searchVO) throws Exception {
+	public List<BoardVO> selectBoardList(BoardVO searchVO) throws Exception {
 		return boardDAO.selectBoardList(searchVO);
 	}
 

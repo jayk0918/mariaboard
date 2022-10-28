@@ -4,6 +4,11 @@ import egovframework.example.sample.service.SampleDefaultVO;
 
 public class BoardVO extends SampleDefaultVO {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private String userId;
 	private String password;
 	

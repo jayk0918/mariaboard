@@ -33,6 +33,7 @@ import java.util.List;
  *
  *  Copyright (C) by MOPAS All right reserved.
  */
+
 public interface BoardService {
 
 	/**
@@ -73,7 +74,7 @@ public interface BoardService {
 	 * @return 글 목록
 	 * @exception Exception
 	 */
-	List<?> selectBoardList(BoardVO searchVO) throws Exception;
+	List<BoardVO> selectBoardList(BoardVO searchVO) throws Exception;
 
 	/**
 	 * 글 총 갯수를 조회한다.

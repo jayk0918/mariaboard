@@ -104,7 +104,7 @@
 			<version>2.5.0</version>
 		</dependency>
         
-        <!-- mysql이나 oracle DB 사용시 아래 설정 추가  
+        <!-- mysql이나 oracle DB 사용시 아래 설정 추가  -->
         <dependency>
             <groupId>com.googlecode.log4jdbc</groupId>
             <artifactId>log4jdbc</artifactId>
@@ -128,7 +128,15 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.31</version>
         </dependency>
-
+        
+        <!-- mariadb -->
+        <dependency>
+			<groupId>org.mariadb.jdbc</groupId>
+			<artifactId>mariadb-java-client</artifactId>
+			<version>2.7.2</version>
+		</dependency>
+		
+		<!--
         <dependency>
             <groupId>ojdbc</groupId>
             <artifactId>ojdbc</artifactId>
