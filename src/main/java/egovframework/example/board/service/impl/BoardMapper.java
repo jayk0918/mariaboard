@@ -45,7 +45,7 @@ public interface BoardMapper {
 	 * @return 등록 결과
 	 * @exception Exception
 	 */
-	void insertBoard(BoardVO vo) throws Exception;
+	void insertContent(BoardVO vo) throws Exception;
 
 	/**
 	 * 글을 수정한다.
@@ -53,7 +53,7 @@ public interface BoardMapper {
 	 * @return void형
 	 * @exception Exception
 	 */
-	void updateBoard(BoardVO vo) throws Exception;
+	void updateContent(BoardVO vo) throws Exception;
 
 	/**
 	 * 글을 삭제한다.
@@ -61,7 +61,7 @@ public interface BoardMapper {
 	 * @return void형
 	 * @exception Exception
 	 */
-	void deleteBoard(BoardVO vo) throws Exception;
+	void deleteContent(BoardVO vo) throws Exception;
 
 	/**
 	 * 글을 조회한다.
@@ -69,7 +69,7 @@ public interface BoardMapper {
 	 * @return 조회한 글
 	 * @exception Exception
 	 */
-	BoardVO selectBoard(BoardVO vo) throws Exception;
+	BoardVO selectContent(BoardVO vo) throws Exception;
 
 	/**
 	 * 글 목록을 조회한다.

@@ -16,7 +16,7 @@
 				<h1>게시판</h1>
 				<div id="board">
 					<div id="writeForm">
-						<form action="write" method="get">
+						<form action="write.do" method="post">
 							<!-- 제목 -->
 							<div class="form-group">
 								<label class="form-text" for="txt-title">제목</label>
@@ -29,8 +29,8 @@
 							</div>
 							
 							<a id="btn_cancel" href="${pageContext.request.contextPath}/list.do">취소</a>
-							<input type = 'hidden' name = 'no' value = "${param.no}">
-							<button id="btn_add" type="submit" >등록</button>
+							<input type = 'text' name = 'userNo' value = "${userNo}">
+							<button id="btn_add" type="submit">등록</button>
 							
 						</form>
 						<!-- //form -->

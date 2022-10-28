@@ -18,7 +18,7 @@
 				CONTENT_TITLE = #{title}
 				,CONTENT_CONTENT = #{content}
 				,CONTENT_HIT = 1
-				,USER_NO = #{userNo}
+				,CONTENT_USER_NO = #{userNo}
 				
 	</insert>
 
@@ -50,6 +50,7 @@
 				,CT.CONTENT_HIT AS 'hit'
 				,DATE_FORMAT(CONTENT_REGDATE, '%x-%c-%d') AS 'date'
 				,US.USER_NAME AS 'userName'
+				,US.SEQ_USER_NO AS 'userNo'
 			FROM
 				BOARD.CONTENTS CT
 			INNER JOIN

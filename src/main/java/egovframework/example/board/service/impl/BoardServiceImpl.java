@@ -70,7 +70,7 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	 */
 	public void insertContent(BoardVO vo) throws Exception {
 		LOGGER.debug(vo.toString());
-		boardDAO.insertBoard(vo);
+		boardDAO.insertContent(vo);
 	}
 
 	/**
@@ -80,7 +80,7 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	 * @exception Exception
 	 */
 	public void updateContent(BoardVO vo) throws Exception {
-		boardDAO.updateBoard(vo);
+		boardDAO.updateContent(vo);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	 * @exception Exception
 	 */
 	public void deleteContent(BoardVO vo) throws Exception {
-		boardDAO.deleteBoard(vo);
+		boardDAO.deleteContent(vo);
 	}
 
 	/**
@@ -100,7 +100,7 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	 * @exception Exception
 	 */
 	public BoardVO selectContent(BoardVO vo) throws Exception {
-		BoardVO resultVO = boardDAO.selectBoard(vo);
+		BoardVO resultVO = boardDAO.selectContent(vo);
 		if (resultVO == null)
 			throw processException("info.nodata.msg");
 		return resultVO;
