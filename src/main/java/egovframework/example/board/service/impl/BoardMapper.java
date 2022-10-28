@@ -73,11 +73,10 @@ public interface BoardMapper {
 
 	/**
 	 * 글 목록을 조회한다.
-	 * @param searchVO - 조회할 정보가 담긴 VO
 	 * @return 글 목록
 	 * @exception Exception
 	 */
-	List<BoardVO> selectBoardList(BoardVO searchVO) throws Exception;
+	List<?> selectBoardList(BoardVO searchVO) throws Exception;
 
 	/**
 	 * 글 총 갯수를 조회한다.
@@ -87,6 +86,6 @@ public interface BoardMapper {
 	 */
 	int selectBoardListTotCnt(BoardVO searchVO);
 	
-	int loginCheck(BoardVO vo);
+	BoardVO loginCheck(BoardVO vo);
 	
 }

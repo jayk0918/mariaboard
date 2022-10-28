@@ -18,6 +18,7 @@ public class BoardVO extends SampleDefaultVO {
 	private String userName;
 	private int contentNo;
 	private String date;
+	private int hit;
 	
 	public BoardVO() {}
 
@@ -85,10 +86,19 @@ public class BoardVO extends SampleDefaultVO {
 		this.date = date;
 	}
 
+	public int getHit() {
+		return hit;
+	}
+
+	public void setHit(int hit) {
+		this.hit = hit;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardVO [userId=" + userId + ", password=" + password + ", title=" + title + ", content=" + content
-				+ ", userNo=" + userNo + ", userName=" + userName + ", contentNo=" + contentNo + ", date=" + date + "]";
+				+ ", userNo=" + userNo + ", userName=" + userName + ", contentNo=" + contentNo + ", date=" + date
+				+ ", hit=" + hit + "]";
 	}
-	
+
 }

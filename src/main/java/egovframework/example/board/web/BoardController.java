@@ -3,6 +3,7 @@ package egovframework.example.board.web;
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import egovframework.example.board.service.BoardService;
@@ -14,7 +15,12 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@RequestMapping(value = "/list.do")
-	public String getList(){
+	public String getList(Model model) throws Exception{
+		/*
+		System.out.println("db요청");
+		List<?> list = boardService.selectBoardList(BoardVO vo);
+		model.addAttribute("list", list);
+		*/
 		return "eGovBoard/list";
 	}
 	

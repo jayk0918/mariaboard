@@ -41,15 +41,15 @@
 
 	</delete>
 
-	<select id="selectBoardList" resultMap="board">
+	<select id="selectBoardList" resultType = "BoardVO">
 
 			SELECT
-				 CT.CONTENT_NO
-				,CT.CONTENT_TITLE
-				,CT.CONTENT_CONTENT
-				,CT.CONTENT_HIT
+				 CT.CONTENT_NO AS 'userNo'
+				,CT.CONTENT_TITLE AS 'title'
+				,CT.CONTENT_CONTENT AS 'content'
+				,CT.CONTENT_HIT AS 'hit'
 				,DATE_FORMAT(CONTENT_REGDATE, '%x-%c-%d') AS 'date'
-				,US.USER_NAME
+				,US.USER_NAME AS 'userName'
 			FROM
 				BOARD.CONTENTS CT
 			INNER JOIN
@@ -62,11 +62,11 @@
 	</select>
 	
 	
-	<select id = "loginCheck" parameterType = "BoardVO" resultType = "int">
+	<select id = "loginCheck" parameterType = "BoardVO" resultType = "BoardVO">
 		
 		SELECT
-			user_id
-			,user_password
+			seq_user_no AS 'userNo'
+			,user_name AS 'name'
 		FROM board.users
 		WHERE user_id = #{userId}
 		AND user_password = #{password}

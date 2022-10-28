@@ -14,6 +14,8 @@
 		<div id="container" class="clearfix">
 			<div id="content">
 				<h1>게시판</h1>
+				<p>안녕하세요 님</p>
+				<a href = "${pageContext.request.contextPath}/main.do">로그아웃</a>
 				<div id="board">
 					<div id="list">
 						<div class="form-group text-right">
@@ -40,13 +42,12 @@
 							<tbody>
 								<tr>
 									<td>1</td>
-									<td><a href="${pageContext.request.contextPath}/readContent.do">제목</a></td>
-									<td>작성자</td>
+									<td><a href="${pageContext.request.contextPath}/readContent.do">제목1</a></td>
+									<td>유저1</td>
 									<td>1</td>
-									<td>2022.10.27.</td>
-									<td id = "deletion">삭제</td>
+									<td>2022.10.28.</td>
+									<td class = "deletion">삭제</td>
 								</tr>
-								
 							</tbody>
 						</table>
 					</div>

@@ -19,14 +19,15 @@
 						<col style="">
 					</colgroup>
 		      		<tr>
-		      			<td><label for="textId">아이디</label></td>
-		      			<td><input id="textId" type="text" name="id"></td>
+		      			<td><label for="userId">아이디</label></td>
+		      			<td><input id="userId" type="text" name="userId"></td>
 		      		</tr>
 		      		<tr>
-		      			<td><label for="textPassword">패스워드</label> </td>
-		      			<td><input id="textPassword" type="password" name="password"></td>   
+		      			<td><label for="password">패스워드</label> </td>
+		      			<td><input id="password" type="password" name="password"></td>   
 		      			   			
-		      		</tr> 
+		      		</tr>
+		      		<!--
 		      		<c:if test = "${param.result == 'fail'}">
 			      		<tr>
 			      			<td colspan="2" id="tdMsg" colspan="2">
@@ -34,6 +35,7 @@
 			      			</td>
 			      		</tr> 
 		      		</c:if>
+		      		 -->
 		      	</table>
 	      		<div id="btnArea">
 					<button class="btn" type="submit" >로그인</button>
