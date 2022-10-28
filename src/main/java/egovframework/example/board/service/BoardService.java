@@ -15,6 +15,8 @@
  */
 package egovframework.example.board.service;
 
+import java.util.List;
+
 /**
  * @Class Name : EgovSampleService.java
  * @Description : EgovSampleService Class
@@ -72,7 +74,7 @@ public interface BoardService {
 	 * @return 글 목록
 	 * @exception Exception
 	 */
-	//List<BoardVO> selectBoardList(BoardVO vo) throws Exception;
+	List<BoardVO> selectBoardList() throws Exception;
 
 	/**
 	 * 글 총 갯수를 조회한다.

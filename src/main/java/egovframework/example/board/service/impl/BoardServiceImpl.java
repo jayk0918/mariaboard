@@ -15,6 +15,8 @@
  */
 package egovframework.example.board.service.impl;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
@@ -111,12 +113,9 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	 * @exception Exception
 	 */
 	
-	/*
-	public List<BoardVO> selectBoardList(BoardVO vo) throws Exception {
-		System.out.println("DAO 요청");
+	public List<BoardVO> selectBoardList() throws Exception {
 		return boardDAO.selectBoardList();
 	}
-	 */
 	
 	/**
 	 * 글 총 갯수를 조회한다.
@@ -131,7 +130,5 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	public BoardVO loginCheck(BoardVO vo) {
 		return boardDAO.loginCheck(vo);
 	}
-	
-	
 	
 }

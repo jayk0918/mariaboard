@@ -14,7 +14,7 @@
 		<div id="container" class="clearfix">
 			<div id="content">
 				<h1>게시판</h1>
-				<p>안녕하세요 님</p>
+				<p>안녕하세요 ${userName} 님</p>
 				<a href = "${pageContext.request.contextPath}/main.do">로그아웃</a>
 				<div id="board">
 					<div id="list">
@@ -40,14 +40,16 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td><a href="${pageContext.request.contextPath}/readContent.do">제목1</a></td>
-									<td>유저1</td>
-									<td>1</td>
-									<td>2022.10.28.</td>
-									<td class = "deletion">삭제</td>
-								</tr>
+								<c:forEach items = "${list}" var = "list">
+									<tr>
+										<td>${list.contentNo}</td>
+										<td><a href="${pageContext.request.contextPath}/readContent.do">${list.title}</a></td>
+										<td>${list.userName}</td>
+										<td>${list.hit}</td>
+										<td>${list.date}</td>
+										<td class = "deletion">삭제</td>
+									</tr>
+								</c:forEach>
 							</tbody>
 						</table>
 					</div>

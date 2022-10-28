@@ -25,17 +25,19 @@ public class MainController {
 	public String loginCheck(@ModelAttribute BoardVO bVO, HttpSession session) {
 		
 		BoardVO authUser = boardService.loginCheck(bVO);
-		
+		System.out.println("login : " + authUser);
 		if(authUser != null) {
-			session.setAttribute("authUserName", bVO.getUserName());
-			session.setAttribute("authUserNo", bVO.getUserNo());
-			return "eGovBoard/list";
+			session.setAttribute("authUser", authUser);
+			return "redirect:/list.do";
 		}else {
 			return "redirect:/main.do";
 		}
-		
-		
-		
 	}
 	
+	@RequestMapping(value = "/logout.do")
+	public String logout(HttpSession session) {
+		session.removeAttribute("authUser");
+		session.invalidate();
+		return "redirect:/main.do";
+	}
 }

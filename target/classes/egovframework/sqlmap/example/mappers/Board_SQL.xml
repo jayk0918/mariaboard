@@ -19,7 +19,7 @@
 				,CONTENT_CONTENT = #{content}
 				,CONTENT_HIT = 1
 				,USER_NO = #{userNo}
-
+				
 	</insert>
 
 	<update id="updateContent" parameterType = "BoardVO">
@@ -44,7 +44,7 @@
 	<select id="selectBoardList" resultType = "BoardVO">
 
 			SELECT
-				 CT.CONTENT_NO AS 'userNo'
+				 CT.CONTENT_NO AS 'contentNo'
 				,CT.CONTENT_TITLE AS 'title'
 				,CT.CONTENT_CONTENT AS 'content'
 				,CT.CONTENT_HIT AS 'hit'
@@ -57,7 +57,7 @@
 			ON
 				CT.CONTENT_USER_NO = US.SEQ_USER_NO
 			ORDER BY
-				CT.CONTENT_NO DESC;
+				contentNo DESC
 
 	</select>
 	
@@ -66,7 +66,7 @@
 		
 		SELECT
 			seq_user_no AS 'userNo'
-			,user_name AS 'name'
+			,user_name AS 'userName'
 		FROM board.users
 		WHERE user_id = #{userId}
 		AND user_password = #{password}
