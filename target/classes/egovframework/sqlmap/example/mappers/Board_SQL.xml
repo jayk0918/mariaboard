@@ -28,13 +28,14 @@
 				BOARD.CONTENTS
 			SET
 				CONTENT_TITLE = #{title}
+				,CONTENT_CONTENT = #{content}
 				,CONTENT_REGDATE = CURRENT_TIMESTAMP
 			WHERE
 				CONTENT_NO = #{contentNo}
 
 	</update>
 
-	<delete id="deleteContent">
+	<delete id="deleteContent" parameterType = "int">
 
 			DELETE FROM BOARD.CONTENTS
 			WHERE CONTENT_NO = #{contentNo}
@@ -75,6 +76,37 @@
 	</select>
 	
 	
+	<update id="updateHit" parameterType = "int">
+
+			UPDATE
+				board.contents
+			SET
+				content_hit = content_hit + 1
+			WHERE
+				content_no = #{contentNo}
+
+	</update>
+	
+	<select id = "getContent" parameterType = "int" resultType = "BoardVO">
+	
+		SELECT
+			 CT.CONTENT_NO AS 'contentNo'
+			,CT.CONTENT_TITLE AS 'title'
+			,CT.CONTENT_CONTENT AS 'content'
+			,CT.CONTENT_HIT AS 'hit'
+			,DATE_FORMAT(CONTENT_REGDATE, '%x-%c-%d') AS 'date'
+			,US.USER_NAME AS 'userName'
+			,US.SEQ_USER_NO AS 'userNo'
+		FROM
+			BOARD.CONTENTS CT
+		INNER JOIN
+			BOARD.USERS US
+		ON
+			CT.CONTENT_USER_NO = US.SEQ_USER_NO
+		WHERE
+			CT.CONTENT_NO = #{contentNo}
+	
+	</select>
 	
 	<!--  
 	<select id="selectBoardList" parameterType="searchVO" resultType="egovMap">

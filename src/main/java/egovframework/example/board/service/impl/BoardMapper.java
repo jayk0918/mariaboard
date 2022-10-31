@@ -53,7 +53,7 @@ public interface BoardMapper {
 	 * @return void형
 	 * @exception Exception
 	 */
-	void updateContent(BoardVO vo) throws Exception;
+	int updateContent(BoardVO vo) throws Exception;
 
 	/**
 	 * 글을 삭제한다.
@@ -61,7 +61,7 @@ public interface BoardMapper {
 	 * @return void형
 	 * @exception Exception
 	 */
-	void deleteContent(BoardVO vo) throws Exception;
+	int deleteContent(int contentNo) throws Exception;
 
 	/**
 	 * 글을 조회한다.
@@ -87,5 +87,9 @@ public interface BoardMapper {
 	int selectBoardListTotCnt(BoardVO searchVO);
 	
 	BoardVO loginCheck(BoardVO vo);
+
+	int updateHit(int contentNo) throws Exception;
+	
+	BoardVO getContent(int contentNo);
 	
 }

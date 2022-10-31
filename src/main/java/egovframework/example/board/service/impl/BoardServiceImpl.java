@@ -79,8 +79,8 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	 * @return void형
 	 * @exception Exception
 	 */
-	public void updateContent(BoardVO vo) throws Exception {
-		boardDAO.updateContent(vo);
+	public int updateContent(BoardVO vo) throws Exception {
+		return boardDAO.updateContent(vo);
 	}
 
 	/**
@@ -89,8 +89,9 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	 * @return void형
 	 * @exception Exception
 	 */
-	public void deleteContent(BoardVO vo) throws Exception {
-		boardDAO.deleteContent(vo);
+	public int deleteContent(String contentNo) throws Exception {
+		int convertNo = Integer.parseInt(contentNo);
+		return boardDAO.deleteContent(convertNo);
 	}
 
 	/**
@@ -129,6 +130,14 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	
 	public BoardVO loginCheck(BoardVO vo) {
 		return boardDAO.loginCheck(vo);
+	}
+	
+	public int updateHit(int contentNo) throws Exception {
+		return boardDAO.updateHit(contentNo);
+	}
+	
+	public BoardVO getContent(int contentNo) {
+		return boardDAO.getContent(contentNo);
 	}
 	
 }

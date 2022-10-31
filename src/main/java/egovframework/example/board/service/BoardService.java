@@ -50,7 +50,7 @@ public interface BoardService {
 	 * @return void형
 	 * @exception Exception
 	 */
-	void updateContent(BoardVO vo) throws Exception;
+	int updateContent(BoardVO vo) throws Exception;
 
 	/**
 	 * 글을 삭제한다.
@@ -58,7 +58,7 @@ public interface BoardService {
 	 * @return void형
 	 * @exception Exception
 	 */
-	void deleteContent(BoardVO vo) throws Exception;
+	int deleteContent(String contentNo) throws Exception;
 
 	/**
 	 * 글을 조회한다.
@@ -85,5 +85,9 @@ public interface BoardService {
 	int selectBoardListTotCnt(BoardVO searchVO);
 	
 	BoardVO loginCheck(BoardVO vo);
+	
+	int updateHit(int contentNo) throws Exception;
+	
+	BoardVO getContent(int contentNo);
 
 }

@@ -8,7 +8,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import egovframework.example.board.service.BoardService;
 import egovframework.example.board.service.BoardVO;
@@ -46,14 +49,35 @@ public class BoardController {
 	
 	@RequestMapping(value = "/write.do")
 	public String writeContent(@ModelAttribute BoardVO bVO) throws Exception {
-		
+
 		boardService.insertContent(bVO);
 		return "redirect:/list.do";
 	}
 	
 	@RequestMapping(value = "/readContent.do")
-	public String readContent() {
+	public String readContent(@RequestParam int contentNo, Model model) throws Exception {
+
+		boardService.updateHit(contentNo);
+		BoardVO content = boardService.getContent(contentNo);
+		model.addAttribute("content", content);
+		
 		return "eGovBoard/readContent";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/delete.do")
+	public int deleteContent(@RequestBody String contentNo) throws Exception {
+		return boardService.deleteContent(contentNo);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/edit.do")
+	public int updateContent(@RequestBody BoardVO vo) throws Exception {
+		String content = vo.getContent();
+		System.out.println("받은 content : " + content);
+		return boardService.updateContent(vo);
+	}
+	
+	
 	
 }

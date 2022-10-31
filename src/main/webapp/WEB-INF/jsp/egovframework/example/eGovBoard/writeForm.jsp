@@ -29,7 +29,7 @@
 							</div>
 							
 							<a id="btn_cancel" href="${pageContext.request.contextPath}/list.do">취소</a>
-							<input type = 'text' name = 'userNo' value = "${userNo}">
+							<input type = 'hidden' name = 'userNo' value = "${userNo}">
 							<button id="btn_add" type="submit">등록</button>
 							
 						</form>

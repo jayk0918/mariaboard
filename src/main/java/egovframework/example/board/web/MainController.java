@@ -16,9 +16,9 @@ public class MainController {
 	@Resource(name = "boardService")
 	private BoardService boardService;
 	
-	@RequestMapping(value = "/main.do")
+	@RequestMapping(value = "/loginForm.do")
 	public String getMainPage() {
-		return "eGovBoard/main";
+		return "eGovBoard/loginForm";
 	}
 	
 	@RequestMapping(value = "/login.do")
@@ -30,7 +30,7 @@ public class MainController {
 			session.setAttribute("authUser", authUser);
 			return "redirect:/list.do";
 		}else {
-			return "redirect:/main.do";
+			return "redirect:/loginForm.do";
 		}
 	}
 	
@@ -38,6 +38,6 @@ public class MainController {
 	public String logout(HttpSession session) {
 		session.removeAttribute("authUser");
 		session.invalidate();
-		return "redirect:/main.do";
+		return "redirect:/loginForm.do";
 	}
 }

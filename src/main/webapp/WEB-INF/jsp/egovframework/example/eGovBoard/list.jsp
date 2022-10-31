@@ -15,7 +15,7 @@
 			<div id="content">
 				<h1>게시판</h1>
 				<p>안녕하세요 ${authUser.userName} 님</p>
-				<a href = "${pageContext.request.contextPath}/main.do">로그아웃</a>
+				<a href = "${pageContext.request.contextPath}/logout.do">로그아웃</a>
 				<div id="board">
 					<div id="list">
 						<div class="form-group text-right">
@@ -36,25 +36,16 @@
 									<th>글쓴이</th>
 									<th>조회수</th>
 									<th>작성일</th>
-									<th>관리</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:forEach items = "${list}" var = "list">
 									<tr>
 										<td>${list.contentNo}</td>
-										<td><a href="${pageContext.request.contextPath}/readContent.do">${list.title}</a></td>
+										<td><a href="${pageContext.request.contextPath}/readContent.do?contentNo=${list.contentNo}">${list.title}</a></td>
 										<td>${list.userName}</td>
 										<td>${list.hit}</td>
 										<td>${list.date}</td>
-										<c:choose>
-											<c:when test = "${authUser.userNo == 3 || list.userNo == authUser.userNo}">
-												<td class = "deletion">삭제</td>
-											</c:when>
-											<c:otherwise>
-												<td></td>
-											</c:otherwise>
-										</c:choose>
 									</tr>
 								</c:forEach>
 							</tbody>
