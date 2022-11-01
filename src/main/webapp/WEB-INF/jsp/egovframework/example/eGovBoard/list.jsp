@@ -11,7 +11,6 @@
 
 <body>
 	<div id="wrap">
-
 		<div id="container" class="clearfix">
 			<div id="content">
 				<h1>게시판</h1>
@@ -21,15 +20,17 @@
 					<div id="list">
 						<form name = "search" method = "post" action = "list.do">
 							<select name = 'searchCategory'>
-								<option value='0' >선택하세요</option>
-								<option value='1' >제목</option>
-								<option value='2' >글쓴이</option>
-								<option value='3' >내용</option>
+								<option value='0'>선택하세요</option>
+								<option value='1'>제목</option>
+								<option value='2'>글쓴이</option>
+								<option value='3'>내용</option>
 							</select>
 							<input type="text" name = "searchKeyword">
 							<button type = "submit">검색</button>
 						</form>
-					
+						
+						<p>게시물 수 : ${totalCnt}</p>
+						
 						<table border = '1'>
 							<thead>
 								<tr>
@@ -54,6 +55,16 @@
 						</table>
 					</div>
 					<!-- //list -->
+					
+					<div id = "pagination">
+						<ul>
+							<li>◀</li>
+							<li>1</li>
+							<li>▶</li>
+						</ul>
+					
+					</div>
+					
 				</div>
 				<!-- //board -->
 				
@@ -61,10 +72,8 @@
 				
 			</div>
 			<!-- //content  -->
-
 		</div>
 		<!-- //container  -->
-
 	</div>
 	<!-- //wrap -->
 </body>

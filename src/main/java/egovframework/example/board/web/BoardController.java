@@ -25,14 +25,19 @@ public class BoardController {
 	@RequestMapping(value = "/list.do")
 	public String getList(Model model, HttpSession session, @ModelAttribute BoardVO vo) throws Exception{
 		
-		System.out.println("db요청");
 		BoardVO authUser = (BoardVO) session.getAttribute("authUser");
 		
 		List<BoardVO> list = boardService.selectBoardList(vo);
+		
+		int totalCnt = boardService.selectBoardListTotCnt(vo);
+		int totalPage = (int) Math.ceil((double)totalCnt/10);
+		
 		System.out.println("list : " + list);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("authUser", authUser);
+		model.addAttribute("totalCnt", totalCnt);
+		model.addAttribute("totalPage", totalPage);
 		
 		return "eGovBoard/list";
 	}
@@ -67,7 +72,6 @@ public class BoardController {
 		return "eGovBoard/readContent";
 	}
 	
-	
 	@RequestMapping(value = "/editForm.do")
 	public String getEditForm(@RequestParam int contentNo, Model model) {
 		
@@ -94,7 +98,6 @@ public class BoardController {
 	@RequestMapping(value = "/edit.do")
 	public int updateContent(@RequestBody String vo) throws Exception {
 		System.out.println("print Vo : " + vo);
-		return 1;
 		//return boardService.updateContent(vo);
 	}
 	*/

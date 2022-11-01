@@ -138,24 +138,24 @@
 	</select>
 	
 	
-	<!--
+	<select id="selectBoardListTotCnt" parameterType="BoardVO" resultType="int">
 
-	<select id="selectBoardListTotCnt" parameterType="searchVO" resultType="int">
-
-			SELECT COUNT(*) totcnt
-			FROM SAMPLE
-			WHERE 1=1
-			<if test="searchKeyword != null and searchKeyword != ''">
-		        <choose>
-		            <when test="searchCondition == 0">
-						AND ID LIKE '%' || #{searchKeyword} || '%'
-					</when>
-		            <when test="searchCondition == 1">
-						AND	NAME LIKE '%' || #{searchKeyword} || '%'
-					</when>
-				</choose>
+			SELECT COUNT(*)
+			FROM
+				BOARD.CONTENTS CT
+			INNER JOIN
+				BOARD.USERS US
+			ON
+				CT.CONTENT_USER_NO = US.SEQ_USER_NO
+			<if test="searchCategory == 1">
+				WHERE CT.CONTENT_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+            <if test="searchCategory == 2">
+				WHERE US.USER_NAME LIKE CONCAT('%', #{searchKeyword}, '%')
+			</if>
+			<if test="searchCategory == 3">
+				WHERE CT.CONTENT_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
 	</select>
-	-->
 	
 </mapper>
