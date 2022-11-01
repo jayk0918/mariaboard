@@ -76,7 +76,7 @@ public interface BoardMapper {
 	 * @return 글 목록
 	 * @exception Exception
 	 */
-	List<BoardVO> selectBoardList() throws Exception;
+	List<BoardVO> selectBoardList(BoardVO vo) throws Exception;
 
 	/**
 	 * 글 총 갯수를 조회한다.

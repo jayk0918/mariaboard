@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <title>게시판</title>
 </head>
 
@@ -18,15 +19,16 @@
 				<a href = "${pageContext.request.contextPath}/logout.do">로그아웃</a>
 				<div id="board">
 					<div id="list">
-						<div class="form-group text-right">
-							<select name = 'content'>
-								<option value='' selected = 'selected'>선택하세요</option>
-								<option value='title'>제목</option>
-								<option value='name'>글쓴이</option>
+						<form name = "search" method = "post" action = "list.do">
+							<select name = 'searchCategory'>
+								<option value='0' >선택하세요</option>
+								<option value='1' >제목</option>
+								<option value='2' >글쓴이</option>
+								<option value='3' >내용</option>
 							</select>
-							<input type="text" name = "keyword">
-							<button type="submit" id=btn_search>검색</button>
-						</div>
+							<input type="text" name = "searchKeyword">
+							<button type = "submit">검색</button>
+						</form>
 					
 						<table border = '1'>
 							<thead>
@@ -65,7 +67,7 @@
 
 	</div>
 	<!-- //wrap -->
-
 </body>
+
 
 </html>

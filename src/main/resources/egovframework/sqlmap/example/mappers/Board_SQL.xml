@@ -41,7 +41,7 @@
 			WHERE CONTENT_NO = #{contentNo}
 
 	</delete>
-
+	<!--  
 	<select id="selectBoardList" resultType = "BoardVO">
 
 			SELECT
@@ -62,7 +62,7 @@
 				contentNo DESC
 
 	</select>
-	
+	-->
 	
 	<select id = "loginCheck" parameterType = "BoardVO" resultType = "BoardVO">
 		
@@ -108,26 +108,37 @@
 	
 	</select>
 	
-	<!--  
-	<select id="selectBoardList" parameterType="searchVO" resultType="egovMap">
+	<select id="selectBoardList" parameterType="BoardVO" resultType = "BoardVO">
 
 			SELECT
-				ID, NAME, DESCRIPTION, USE_YN, REG_USER
-			FROM SAMPLE
-			WHERE 1=1
-			<if test="searchKeyword != null and searchKeyword != ''">
-		        <choose>
-		            <when test="searchCondition == 0">
-						AND	ID LIKE '%' || #{searchKeyword} || '%'
-					</when>
-		            <when test="searchCondition == 1">
-						AND	NAME LIKE '%' || #{searchKeyword} || '%'
-					</when>
-				</choose>
-			</if>
-			ORDER BY ID ASC
-			LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+				 CT.CONTENT_NO AS 'contentNo'
+				,CT.CONTENT_TITLE AS 'title'
+				,CT.CONTENT_CONTENT AS 'content'
+				,CT.CONTENT_HIT AS 'hit'
+				,DATE_FORMAT(CONTENT_REGDATE, '%x-%c-%d') AS 'date'
+				,US.USER_NAME AS 'userName'
+				,US.SEQ_USER_NO AS 'userNo'
+			FROM
+				BOARD.CONTENTS CT
+			INNER JOIN
+				BOARD.USERS US
+			ON
+				CT.CONTENT_USER_NO = US.SEQ_USER_NO
+	            <if test="searchCategory == 1">
+					WHERE CT.CONTENT_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+				</if>
+	            <if test="searchCategory == 2">
+					WHERE US.USER_NAME LIKE CONCAT('%', #{searchKeyword}, '%')
+				</if>
+				<if test="searchCategory == 3">
+					WHERE CT.CONTENT_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
+				</if>
+			ORDER BY contentNo DESC
+			
 	</select>
+	
+	
+	<!--
 
 	<select id="selectBoardListTotCnt" parameterType="searchVO" resultType="int">
 

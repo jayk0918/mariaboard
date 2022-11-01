@@ -20,6 +20,10 @@ public class BoardVO extends SampleDefaultVO {
 	private String date;
 	private int hit;
 	
+	private String searchKeyword;
+	private int searchCategory;
+	
+
 	public BoardVO() {}
 
 	public String getUserId() {
@@ -94,11 +98,28 @@ public class BoardVO extends SampleDefaultVO {
 		this.hit = hit;
 	}
 
+	public String getSearchKeyword() {
+		return searchKeyword;
+	}
+
+	public void setSearchKeyword(String searchKeyword) {
+		this.searchKeyword = searchKeyword;
+	}
+	
+
+	public int getSearchCategory() {
+		return searchCategory;
+	}
+
+	public void setSearchCategory(int searchCategory) {
+		this.searchCategory = searchCategory;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardVO [userId=" + userId + ", password=" + password + ", title=" + title + ", content=" + content
 				+ ", userNo=" + userNo + ", userName=" + userName + ", contentNo=" + contentNo + ", date=" + date
-				+ ", hit=" + hit + "]";
+				+ ", hit=" + hit + ", searchKeyword=" + searchKeyword + ", searchCategory=" + searchCategory + "]";
 	}
 
 }

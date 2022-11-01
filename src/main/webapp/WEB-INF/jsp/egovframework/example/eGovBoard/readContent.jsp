@@ -19,6 +19,7 @@
 				<div id="board">
 					<div id="read">
 						<!-- 작성자 -->
+						<!--  <input id = "contentNo" type = "hidden" value = "${content.contentNo}">-->
 						<div class="form-group">
 							<span class="form-text">작성자</span>
 							<span class="form-value">${content.userName}</span>
@@ -40,7 +41,7 @@
 						<div class="form-group">
 							<span class="form-text">제 목</span>
 							<span id = "originalTitle" class="form-value">${content.title}</span>
-							<input type = "hidden" id = "editTitle">
+							<!-- <input type = "hidden" id = "editTitle">-->
 						</div>
 					
 						<!-- 내용 -->
@@ -48,18 +49,22 @@
 							<span id = "originalContent" class="form-value" >
 								${content.content}
 							</span>
-							<input type = "hidden" id = "editContent">
+							<!--<input type = "hidden" id = "editContent">-->
 						</div>
 						
 						<a id="btn_list" href="${pageContext.request.contextPath}/list.do">목록</a>
 						
+						<c:if test = "${authUser.userNo == content.userNo}">
+							<a href = "${pageContext.request.contextPath}/editForm.do?contentNo=${content.contentNo}">수정</a>
+							<!-- 
+							<button id = "edit" type = "button">수정</button>
+							<button id = "editConfirm" type = "button">확인</button>
+							<button id = "editCancel" type = "button"> 취소</button>
+							-->
+						</c:if>
+						
 						<c:if test="${authUser.userNo == 3 || authUser.userNo == content.userNo}">
 							<button id = "deletion">삭제</td>
-							<c:if test = "${authUser.userNo == content.userNo}">
-								<button id = "edit" type = "button">수정</button>
-								<button id = "editConfirm" type = "button">확인</button>
-								<button id = "editCancel" type = "button"> 취소</button>
-							</c:if>
 						</c:if>
 						
 					</div>
@@ -102,7 +107,7 @@ $("#deletion").on("click",function(){
 		});
 	
 });
-
+/*
 $("#edit").on("click",function(){
 	
 	var contentNo = ${content.contentNo};
@@ -122,22 +127,23 @@ $("#edit").on("click",function(){
 $("#editConfirm").on("click", function(){
 	var title = $("#editTitle").val();
 	var content = $("#editContent").val();
-	var contentNo = ${content.contentNo};
+	var contentNo = $("#contentNo").val();
+	
+	var BoardVO ={
+			"title" : title,
+			"content" : content,
+			"contentNo" : contentNo
+		};
 	
 	console.log(title);
 	console.log(content);
 	console.log(contentNo);
-	
-	var BoardVO ={
-		title : title,
-		content : content,
-		contentNo : contentNo
-	}
+	console.log(BoardVO);
 	
 	$.ajax({
 		url : "${pageContext.request.contextPath}/edit.do",
 		type : "post",
-		data : JSON.stringify(BoardVO),
+		data : JSON.parse(BoardVO),
 		contentType : "application/json",
 		dataType : "json",
 		success : function(result){
@@ -151,7 +157,6 @@ $("#editConfirm").on("click", function(){
 	
 });
 
-
 $("#editCancel").on("click", function(){
 	$("#editConfirm").css('display', 'none');
 	$("#editCancel").css('display', 'none');
@@ -162,8 +167,7 @@ $("#editCancel").on("click", function(){
 	$("#edit").show();
 	$("#deletion").show();
 });
-
-
+*/
 </script>
 
 </html>

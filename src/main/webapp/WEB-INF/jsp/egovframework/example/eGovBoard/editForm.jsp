@@ -5,27 +5,30 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글쓰기 양식</title>
-</head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
+<title>수정 양식</title>
+
+</head>
 
 <body>
 	<div id="wrap">
 		<div id="container" class="clearfix">
 			<div id="content">
-				<h1>게시판</h1>
+				<h1>게시글 조회</h1>
 				<div id="board">
 					<div id="writeForm">
-						<form action="write.do" method="post">
+						<form action="edit.do" method="post">
+							<input type = "hidden" name = "contentNo" value = "${content.contentNo}">
 							<!-- 제목 -->
 							<div class="form-group">
 								<label class="form-text" for="txt-title">제목</label>
-								<input type="text" id="txt-title" name="title" value="" placeholder="제목을 입력해 주세요">
+								<input type="text" id="txt-title" name="title" value="${content.title}">
 							</div>
 						
 							<!-- 내용 -->
 							<div class="form-group">
-								<textarea id="txt-content" name = "content"></textarea>
+								<textarea id="txt-content" name = "content">${content.content}</textarea>
 							</div>
 							
 							<a id="btn_cancel" href="${pageContext.request.contextPath}/list.do">취소</a>
@@ -43,7 +46,6 @@
 		<!-- //container  -->
 	</div>
 	<!-- //wrap -->
-
 </body>
 
 </html>

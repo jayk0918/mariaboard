@@ -23,12 +23,12 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@RequestMapping(value = "/list.do")
-	public String getList(Model model, HttpSession session) throws Exception{
+	public String getList(Model model, HttpSession session, @ModelAttribute BoardVO vo) throws Exception{
 		
 		System.out.println("db요청");
 		BoardVO authUser = (BoardVO) session.getAttribute("authUser");
 		
-		List<BoardVO> list = boardService.selectBoardList();
+		List<BoardVO> list = boardService.selectBoardList(vo);
 		System.out.println("list : " + list);
 		
 		model.addAttribute("list", list);
@@ -48,8 +48,11 @@ public class BoardController {
 	}
 	
 	@RequestMapping(value = "/write.do")
-	public String writeContent(@ModelAttribute BoardVO bVO) throws Exception {
-
+	public String writeContent(@ModelAttribute BoardVO bVO, HttpSession session) throws Exception {
+		
+		BoardVO vo = (BoardVO) session.getAttribute("authUser");
+		int userNo = vo.getUserNo();
+		bVO.setUserNo(userNo);
 		boardService.insertContent(bVO);
 		return "redirect:/list.do";
 	}
@@ -64,20 +67,37 @@ public class BoardController {
 		return "eGovBoard/readContent";
 	}
 	
+	
+	@RequestMapping(value = "/editForm.do")
+	public String getEditForm(@RequestParam int contentNo, Model model) {
+		
+		BoardVO content = boardService.getContent(contentNo);
+		model.addAttribute("content", content);
+		
+		return "eGovBoard/editForm";
+	}
+	
+	@RequestMapping(value = "/edit.do")
+	public String editContent(@ModelAttribute BoardVO vo) throws Exception {
+		boardService.updateContent(vo);
+		return "redirect:/list.do";
+	}
+	
 	@ResponseBody
 	@RequestMapping(value = "/delete.do")
 	public int deleteContent(@RequestBody String contentNo) throws Exception {
 		return boardService.deleteContent(contentNo);
 	}
 	
+	/*
 	@ResponseBody
 	@RequestMapping(value = "/edit.do")
-	public int updateContent(@RequestBody BoardVO vo) throws Exception {
-		String content = vo.getContent();
-		System.out.println("받은 content : " + content);
-		return boardService.updateContent(vo);
+	public int updateContent(@RequestBody String vo) throws Exception {
+		System.out.println("print Vo : " + vo);
+		return 1;
+		//return boardService.updateContent(vo);
 	}
-	
+	*/
 	
 	
 }
