@@ -6,11 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
-
 </head>
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.js"></script>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/egovframework/loginForm.css">
+
 <body>
+	<h1>Board Project</h1>
 	<div id="center-content">
-		
 		<div id="loginForm">
 			<form method="post" action="${pageContext.request.contextPath}/login.do">
 	      		<table>
@@ -23,9 +29,8 @@
 		      			<td><input id="userId" type="text" name="userId"></td>
 		      		</tr>
 		      		<tr>
-		      			<td><label for="password">패스워드</label> </td>
-		      			<td><input id="password" type="password" name="password"></td>   
-		      			   			
+		      			<td><label for = "password">패스워드</label> </td>
+		      			<td><input id = "password" type="password" name="password"></td>   
 		      		</tr>
 		      		<!--
 		      		<c:if test = "${param.result == 'fail'}">
@@ -38,13 +43,10 @@
 		      		 -->
 		      	</table>
 	      		<div id="btnArea">
-					<button class="btn" type="submit" >로그인</button>
+					<button id = "btn-login" class="btn btn-primary" type="submit">로그인</button>
 				</div>
-	      		
 			</form>
-		
 		</div>
-		
 	</div>
 	
 </body>
