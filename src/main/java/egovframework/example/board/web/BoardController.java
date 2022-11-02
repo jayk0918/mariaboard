@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.egovframe.rte.fdl.property.EgovPropertyService;
+import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,22 +24,40 @@ public class BoardController {
 	@Resource(name = "boardService")
 	private BoardService boardService;
 	
+	/** EgovPropertyService */
+	@Resource(name = "propertiesService")
+	protected EgovPropertyService propertiesService;
+	
 	@RequestMapping(value = "/list.do")
 	public String getList(Model model, HttpSession session, @ModelAttribute BoardVO vo) throws Exception{
 		
 		BoardVO authUser = (BoardVO) session.getAttribute("authUser");
 		
+		/******* Pagination *******/
+		/** EgovPropertyService.sample **/
+		vo.setPageUnit(propertiesService.getInt("pageUnit"));
+		vo.setPageSize(propertiesService.getInt("pageSize"));
+
+		/******* pagination setting *******/
+		PaginationInfo paginationInfo = new PaginationInfo();
+		paginationInfo.setCurrentPageNo(vo.getPageIndex());
+		paginationInfo.setRecordCountPerPage(vo.getPageUnit());
+		paginationInfo.setPageSize(vo.getPageSize());
+
+		vo.setFirstIndex(paginationInfo.getFirstRecordIndex());
+		vo.setLastIndex(paginationInfo.getLastRecordIndex());
+		vo.setRecordCountPerPage(paginationInfo.getRecordCountPerPage());
+
+		int totCnt = boardService.selectBoardListTotCnt(vo);
+		paginationInfo.setTotalRecordCount(totCnt);
+		
 		List<BoardVO> list = boardService.selectBoardList(vo);
-		
-		int totalCnt = boardService.selectBoardListTotCnt(vo);
-		int totalPage = (int) Math.ceil((double)totalCnt/10);
-		
 		System.out.println("list : " + list);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("authUser", authUser);
-		model.addAttribute("totalCnt", totalCnt);
-		model.addAttribute("totalPage", totalPage);
+		model.addAttribute("totCnt", totCnt);
+		model.addAttribute("paginationInfo", paginationInfo);
 		
 		return "eGovBoard/list";
 	}

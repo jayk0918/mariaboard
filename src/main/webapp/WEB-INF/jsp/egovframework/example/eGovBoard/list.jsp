@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://egovframework.gov/ctl/ui" prefix="ui" %>
 
 <!DOCTYPE html>
 <html>
@@ -29,7 +30,7 @@
 							<button type = "submit">검색</button>
 						</form>
 						
-						<p>게시물 수 : ${totalCnt}</p>
+						<p>게시물 수 : ${totCnt}</p>
 						
 						<table border = '1'>
 							<thead>
@@ -55,18 +56,13 @@
 						</table>
 					</div>
 					<!-- //list -->
-					
-					<div id = "pagination">
-						<ul>
-							<li>◀</li>
-							<li>1</li>
-							<li>▶</li>
-						</ul>
-					
-					</div>
-					
 				</div>
 				<!-- //board -->
+				
+				<div id="paging">
+	        		<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_link_page" />
+	        		<form:hidden path="pageIndex" />
+	        	</div>
 				
 				<a id="btn_add" href="${pageContext.request.contextPath}/writeForm.do">등록</a>
 				
@@ -78,5 +74,10 @@
 	<!-- //wrap -->
 </body>
 
+<script type = "text/javascript">
+function fn_egov_link_page(pageNo){
+	location.href = "<c:url value='/list.do'/>?pageIndex="+pageNo;
+}
+</script>
 
 </html>
