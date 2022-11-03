@@ -9,9 +9,12 @@ import org.egovframe.rte.fdl.property.EgovPropertyService;
 import org.egovframe.rte.ptl.mvc.tags.ui.pagination.PaginationInfo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,10 +31,27 @@ public class BoardController {
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
 	
-	@RequestMapping(value = "/list.do")
+	@RequestMapping(value = "/list.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public String getList(Model model, HttpSession session, @ModelAttribute BoardVO vo) throws Exception{
 		
 		BoardVO authUser = (BoardVO) session.getAttribute("authUser");
+		
+		BoardVO searchVO = new BoardVO();
+		int beforeCategory = vo.getSearchCategory();
+		String beforeKeyword = vo.getSearchKeyword();
+		searchVO.setSearchedCategory(beforeCategory);
+		searchVO.setSearchedKeyword(beforeKeyword);
+		
+		System.out.println("beforeCategory : " + beforeCategory);
+		System.out.println("beforeKeyword : " + beforeKeyword);
+		
+		int categoryCheck = searchVO.getSearchedCategory();
+		String keywordCheck = searchVO.getSearchedKeyword();
+		
+		if(categoryCheck != 0 && keywordCheck != null) {
+			vo.setSearchCategory(categoryCheck);
+			vo.setSearchKeyword(keywordCheck);
+		}
 		
 		/******* Pagination *******/
 		/** EgovPropertyService.sample **/
@@ -58,11 +78,12 @@ public class BoardController {
 		model.addAttribute("authUser", authUser);
 		model.addAttribute("totCnt", totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
+		model.addAttribute("searchVO",searchVO);
 		
 		return "eGovBoard/list";
 	}
 	
-	@RequestMapping(value = "/writeForm.do")
+	@GetMapping(value = "/writeForm.do")
 	public String getWriteForm(Model model, HttpSession session) {
 		
 		BoardVO vo = (BoardVO) session.getAttribute("authUser");
@@ -72,7 +93,7 @@ public class BoardController {
 		return "eGovBoard/writeForm";
 	}
 	
-	@RequestMapping(value = "/write.do")
+	@PostMapping(value = "/write.do")
 	public String writeContent(@ModelAttribute BoardVO bVO, HttpSession session) throws Exception {
 		
 		BoardVO vo = (BoardVO) session.getAttribute("authUser");
@@ -82,7 +103,7 @@ public class BoardController {
 		return "redirect:/list.do";
 	}
 	
-	@RequestMapping(value = "/readContent.do")
+	@GetMapping(value = "/readContent.do")
 	public String readContent(@RequestParam int contentNo, Model model) throws Exception {
 
 		boardService.updateHit(contentNo);
@@ -92,7 +113,7 @@ public class BoardController {
 		return "eGovBoard/readContent";
 	}
 	
-	@RequestMapping(value = "/editForm.do")
+	@GetMapping(value = "/editForm.do")
 	public String getEditForm(@RequestParam int contentNo, Model model) {
 		
 		BoardVO content = boardService.getContent(contentNo);
@@ -101,14 +122,14 @@ public class BoardController {
 		return "eGovBoard/editForm";
 	}
 	
-	@RequestMapping(value = "/edit.do")
+	@PostMapping(value = "/edit.do")
 	public String editContent(@ModelAttribute BoardVO vo) throws Exception {
 		boardService.updateContent(vo);
 		return "redirect:/list.do";
 	}
 	
 	@ResponseBody
-	@RequestMapping(value = "/delete.do")
+	@PostMapping(value = "/delete.do")
 	public int deleteContent(@RequestBody String contentNo) throws Exception {
 		return boardService.deleteContent(contentNo);
 	}

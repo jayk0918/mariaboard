@@ -4,8 +4,9 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import egovframework.example.board.service.BoardService;
 import egovframework.example.board.service.BoardVO;
@@ -16,12 +17,12 @@ public class MainController {
 	@Resource(name = "boardService")
 	private BoardService boardService;
 	
-	@RequestMapping(value = "/loginForm.do")
+	@GetMapping(value = "/loginForm.do")
 	public String getMainPage() {
 		return "eGovBoard/loginForm";
 	}
 	
-	@RequestMapping(value = "/login.do")
+	@PostMapping(value = "/login.do")
 	public String loginCheck(@ModelAttribute BoardVO bVO, HttpSession session) {
 		
 		BoardVO authUser = boardService.loginCheck(bVO);
@@ -34,7 +35,7 @@ public class MainController {
 		}
 	}
 	
-	@RequestMapping(value = "/logout.do")
+	@GetMapping(value = "/logout.do")
 	public String logout(HttpSession session) {
 		session.removeAttribute("authUser");
 		session.invalidate();

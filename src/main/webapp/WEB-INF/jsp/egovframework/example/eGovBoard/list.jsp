@@ -15,21 +15,24 @@
 		<div id="container" class="clearfix">
 			<div id="content">
 				<h1>게시판</h1>
-				<p>안녕하세요 ${authUser.userName} 님</p>
+				<p>안녕하세요 ${authUser.userName}님</p>
 				<a href = "${pageContext.request.contextPath}/logout.do">로그아웃</a>
 				<div id="board">
 					<div id="list">
-						<form name = "search" method = "post" action = "list.do">
-							<select name = 'searchCategory'>
+						<form id = "search" name = "search" method = "get" action = "list.do">
+							<select id = "searchCategory" name = 'searchCategory'>
 								<option value='0'>선택하세요</option>
 								<option value='1'>제목</option>
 								<option value='2'>글쓴이</option>
 								<option value='3'>내용</option>
 							</select>
-							<input type="text" name = "searchKeyword">
+							<input id = "searchKeyword" type= "text" name = "searchKeyword">
 							<button type = "submit">검색</button>
 						</form>
 						
+						<input id = "searchedCategory" name = "searchedCategory" type = "hidden" value = "${searchVO.searchedCategory}">
+						<input id = "searchedKeyword" name = "searchedKeyword" type = "hidden" value = "${searchVO.searchedKeyword}">
+
 						<p>게시물 수 : ${totCnt}</p>
 						
 						<table border = '1'>
@@ -75,8 +78,10 @@
 </body>
 
 <script type = "text/javascript">
+
 function fn_egov_link_page(pageNo){
-	location.href = "<c:url value='/list.do'/>?pageIndex="+pageNo;
+	location.href = "<c:url value='/list.do'/>?pageIndex=" + pageNo + "&searchCategory=" + $("#searchedCategory").val() + "&searchKeyword=" + $("#searchedKeyword").val();
+	// "?searchCategory=" + $("#searchCategory").val() + "?searchKeyword=" + $("#searchKeyword").val();
 }
 </script>
 
