@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+#content{
+	width : 900px;
+}
+
+#board{
+	margin-top : 30px;
+}
+
+.btn{
+	float : right;
+	border : 1px solid #000000;
+	margin-left : 10px;
+	font-size : 14px;
+	background-color : #DDDDDD;
+}
+
+.btn:hover{
+	color: #000000;
+    background-color: #DDDDDD;
+    border-color: #000000;
+    text-decoration : none;
+}
+
+#deletion{
+	background-color: #f2114c;
+	color : white;
+}
+
+#edit{
+	background-color : #ffc107;
+}
+
+#returnList{
+	background-color : #007bff;
+	color : white;
+}

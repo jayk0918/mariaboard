@@ -19,29 +19,24 @@
 	<div id="center-content">
 		<div id="loginForm">
 			<form method="post" action="${pageContext.request.contextPath}/login.do">
-	      		<table>
-			      	<colgroup>
-						<col style="width: 100px;">
-						<col style="">
-					</colgroup>
+				
+				<div id = "idInput">
+		      		<label for="userId">아이디</label></td>
+			      	<input id="userId" type="text" name="userId" placeholder = "아이디를 입력해주세요"></td>
+	      		</div>
+	      		<div id = "passwordInput">
+	      			<label for = "password">패스워드</label>
+	      			<input id = "password" type="password" name="password">
+      			</div>
+	      		<!--
+	      		<c:if test = "${param.result == 'fail'}">
 		      		<tr>
-		      			<td><label for="userId">아이디</label></td>
-		      			<td><input id="userId" type="text" name="userId"></td>
-		      		</tr>
-		      		<tr>
-		      			<td><label for = "password">패스워드</label> </td>
-		      			<td><input id = "password" type="password" name="password"></td>   
-		      		</tr>
-		      		<!--
-		      		<c:if test = "${param.result == 'fail'}">
-			      		<tr>
-			      			<td colspan="2" id="tdMsg" colspan="2">
-		      					<span>아이디 또는 비밀번호를 확인해 주세요.</span>
-			      			</td>
-			      		</tr> 
-		      		</c:if>
-		      		 -->
-		      	</table>
+		      			<td colspan="2" id="tdMsg" colspan="2">
+	      					<span>아이디 또는 비밀번호를 확인해 주세요.</span>
+		      			</td>
+		      		</tr> 
+	      		</c:if>
+	      		 -->
 	      		<div id="btnArea">
 					<button id = "btn-login" class="btn btn-primary" type="submit">로그인</button>
 				</div>

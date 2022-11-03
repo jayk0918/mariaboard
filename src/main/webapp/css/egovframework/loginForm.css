@@ -25,14 +25,24 @@ h1{
 #center-content{
 	display : flex;
 	justify-content : center;
-	margin-top : 100px;
+	margin-top : 60px;
 }
 
 
 #btn-login{
-	margin-top : 15px;	
+	margin-top : 25px;
+	width: 265px;
 }
 
-tr>td{
-	margin-top : 10px;
+#idInput{
+	margin-bottom : 20px;
 }
+
+#userId{
+	margin-left: 15px;
+}
+
+label{
+	margin-right : 10px;
+}
+

@@ -140,7 +140,7 @@
 				WHERE CT.CONTENT_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
 			</if>
 		ORDER BY
-			contentNo DESC
+			CONTENT_REGDATE DESC
 		LIMIT
 			#{firstIndex}, #{recordCountPerPage}
 			

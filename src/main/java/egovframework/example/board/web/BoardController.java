@@ -78,7 +78,7 @@ public class BoardController {
 		model.addAttribute("authUser", authUser);
 		model.addAttribute("totCnt", totCnt);
 		model.addAttribute("paginationInfo", paginationInfo);
-		model.addAttribute("searchVO",searchVO);
+		model.addAttribute("searchVO", searchVO);
 		
 		return "eGovBoard/list";
 	}

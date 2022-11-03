@@ -11,6 +11,13 @@
 
 </head>
 
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/assets/bootstrap/js/bootstrap.js"></script>
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/assets/bootstrap/css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/egovframework/board.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/egovframework/readContent.css">
+
 <body>
 	<div id="wrap">
 		<div id="container" class="clearfix">
@@ -52,10 +59,10 @@
 							<!--<input type = "hidden" id = "editContent">-->
 						</div>
 						
-						<a id="btn_list" href="${pageContext.request.contextPath}/list.do">목록</a>
+						<a id = "returnList" class = "btn" href="${pageContext.request.contextPath}/list.do" >목록</a>
 						
 						<c:if test = "${authUser.userNo == content.userNo}">
-							<a href = "${pageContext.request.contextPath}/editForm.do?contentNo=${content.contentNo}">수정</a>
+							<a id = "edit" href = "${pageContext.request.contextPath}/editForm.do?contentNo=${content.contentNo}" class = "btn">수정</a>
 							<!-- 
 							<button id = "edit" type = "button">수정</button>
 							<button id = "editConfirm" type = "button">확인</button>
@@ -64,7 +71,7 @@
 						</c:if>
 						
 						<c:if test="${authUser.userNo == 3 || authUser.userNo == content.userNo}">
-							<button id = "deletion">삭제</td>
+							<button id = "deletion" class = "btn">삭제</td>
 						</c:if>
 						
 					</div>
@@ -80,12 +87,12 @@
 </body>
 
 <script type = "text/javascript">
-
+/*
 $(document).ready(function(){
 	$("#editConfirm").css('display', 'none');
 	$("#editCancel").css('display', 'none');
 });
-
+*/
 $("#deletion").on("click",function(){
 	console.log("삭제버튼 클릭");
 	var contentNo = ${content.contentNo};
@@ -107,6 +114,7 @@ $("#deletion").on("click",function(){
 		});
 	
 });
+
 /*
 $("#edit").on("click",function(){
 	
