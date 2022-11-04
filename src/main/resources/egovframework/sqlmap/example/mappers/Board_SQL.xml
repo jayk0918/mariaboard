@@ -130,15 +130,20 @@
 			BOARD.USERS US
 		ON
 			CT.CONTENT_USER_NO = US.SEQ_USER_NO
-            <if test="searchCategory == 1">
-				WHERE CT.CONTENT_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
-			</if>
-            <if test="searchCategory == 2">
-				WHERE US.USER_NAME LIKE CONCAT('%', #{searchKeyword}, '%')
-			</if>
-			<if test="searchCategory == 3">
-				WHERE CT.CONTENT_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
-			</if>
+		
+		<if test="searchStatus == 1 and searchKeyword == null or ''.equals(searchKeyword)">
+			WHERE 1=2
+		</if>
+		<if test="searchCategory == 1 and searchKeyword != null and searchKeyword != ''">
+			WHERE CT.CONTENT_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchCategory == 2 and searchKeyword != null and searchKeyword != ''">
+			WHERE US.USER_NAME LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchCategory == 3 and searchKeyword != null and searchKeyword != ''">
+			WHERE CT.CONTENT_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+			
 		ORDER BY
 			CONTENT_REGDATE DESC
 		LIMIT
@@ -157,13 +162,14 @@
 			BOARD.USERS US
 		ON
 			CT.CONTENT_USER_NO = US.SEQ_USER_NO
-		<if test="searchCategory == 1">
+		
+		<if test="searchCategory == 1 and searchKeyword != null and searchKeyword != ''">
 			WHERE CT.CONTENT_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
-           <if test="searchCategory == 2">
+		<if test="searchCategory == 2 and searchKeyword != null and searchKeyword != ''">
 			WHERE US.USER_NAME LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
-		<if test="searchCategory == 3">
+		<if test="searchCategory == 3 and searchKeyword != null and searchKeyword != ''">
 			WHERE CT.CONTENT_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>
 		

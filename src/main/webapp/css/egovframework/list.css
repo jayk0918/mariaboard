@@ -18,6 +18,10 @@
 	margin-bottom : 20px;
 }
 
+#search > button{
+	margin-top : -4px;
+}
+
 #paging{
 	display : flex;
 	justify-content : center;
@@ -37,7 +41,6 @@
 
 
 .btn{
-	float : right;
 	border : 1px solid #000000;
 	margin-left : 10px;
 	font-size : 14px;
@@ -53,7 +56,9 @@
 
 .table-bordered{
 	margin-bottom : 10px;
+	table-layout : fixed;
 }
+
 
 #searchCategory{
 	width : 100px;
@@ -62,12 +67,19 @@
 }
 
 #searchKeyword{
-	padding-left : 10px;
 	height: 35px;
+	padding-left : 10px;
+	margin-left : 5px;
+	margin-right : -5px;
 }
 
 #btn_add{
 	background-color : #cbf77b;
+	float : right;
 }
 
+#initialization{
+	float : left;
+	margin-left : -10px;
+}
 
