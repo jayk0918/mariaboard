@@ -131,9 +131,6 @@
 		ON
 			CT.CONTENT_USER_NO = US.SEQ_USER_NO
 		
-		<if test="searchStatus == 1 and searchKeyword == null or ''.equals(searchKeyword)">
-			WHERE 1=2
-		</if>
 		<if test="searchCategory == 1 and searchKeyword != null and searchKeyword != ''">
 			WHERE CT.CONTENT_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
 		</if>

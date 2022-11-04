@@ -42,6 +42,7 @@ public class BoardController {
 		
 		searchVO.setSearchedCategory(beforeCategory);
 		searchVO.setSearchedKeyword(beforeKeyword);
+		searchVO.setSearchStatus(1);
 		
 		System.out.println("beforeCategory : " + beforeCategory);
 		System.out.println("beforeKeyword : " + beforeKeyword);
@@ -73,7 +74,6 @@ public class BoardController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		
 		List<BoardVO> list = boardService.selectBoardList(vo);
-		searchVO.setSearchStatus(1);
 		
 		System.out.println("list : " + list);
 		

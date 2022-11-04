@@ -29,9 +29,6 @@
 							<p>안녕하세요 ${authUser.userName}님  <a href = "${pageContext.request.contextPath}/logout.do">로그아웃</a></p>
 						</div>
 						<p id = "contentCnt" class = "clearfix">게시물 수 : ${totCnt}</p>
-						<div id = "initialization">
-							<a class = "btn" href = "${pageContext.request.contextPath}/list.do">초기화</a>
-						</div>
 						<form id = "search" name = "search" method = "get" action = "list.do">
 							<select id = "searchCategory" name = 'searchCategory'>
 								<option value='0'>선택하세요</option>
@@ -46,7 +43,6 @@
 					<div id="list">
 						<input id = "searchedCategory" name = "searchedCategory" type = "hidden" value = "${searchVO.searchedCategory}">
 						<input id = "searchedKeyword" name = "searchedKeyword" type = "hidden" value = "${searchVO.searchedKeyword}">
-						<input id = "searchStatus" name = "searchStatus" type = "hidden" value = "${searchVO.searchStatus}">
 						
 						<table class = "table-bordered">
 							<thead>
@@ -73,6 +69,9 @@
 					</div>
 					<!-- //list -->
 					<a id="btn_add" class = "btn" href="${pageContext.request.contextPath}/writeForm.do">등록</a>
+					<div id = "initialization">
+						<a class = "btn" href = "${pageContext.request.contextPath}/list.do">초기화</a>
+					</div>
 				</div>
 				<!-- //board -->
 				
