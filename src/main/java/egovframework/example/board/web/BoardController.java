@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.example.board.service.BoardService;
 import egovframework.example.board.service.BoardVO;
@@ -97,12 +98,19 @@ public class BoardController {
 	}
 	
 	@PostMapping(value = "/write.do")
-	public String writeContent(@ModelAttribute BoardVO bVO, HttpSession session) throws Exception {
+	public String writeContent(@ModelAttribute BoardVO bVO,
+								HttpSession session,
+								@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
 		
 		BoardVO vo = (BoardVO) session.getAttribute("authUser");
 		int userNo = vo.getUserNo();
 		bVO.setUserNo(userNo);
 		boardService.insertContent(bVO);
+		
+		if(file.isEmpty() != true) {
+			boardService.fileSave(bVO, file);
+		}
+		
 		return "redirect:/list.do";
 	}
 	
@@ -134,6 +142,7 @@ public class BoardController {
 	@ResponseBody
 	@PostMapping(value = "/delete.do")
 	public int deleteContent(@RequestBody String contentNo) throws Exception {
+		boardService.deleteFile(contentNo);
 		return boardService.deleteContent(contentNo);
 	}
 	

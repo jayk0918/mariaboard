@@ -10,7 +10,7 @@
 		<result property="contentNo" column="content_no"/>
 	</resultMap>
 
-	<insert id="insertContent" parameterType="BoardVO">
+	<insert id="insertContent" useGeneratedKeys = "true" keyProperty = "contentNo" parameterType="BoardVO">
 
 		INSERT INTO
 			BOARD.CONTENTS
@@ -19,7 +19,19 @@
 			,CONTENT_CONTENT = #{content}
 			,CONTENT_HIT = 1
 			,CONTENT_USER_NO = #{userNo}
-				
+		
+	</insert>
+	
+	<insert id = "fileInsert" parameterType = "BoardVO">
+		INSERT INTO
+			BOARD.FILES
+		SET
+			FILES_BOARD_NO = #{contentNo}
+			,FILES_ORG_NAME = #{orgName}
+			,FILES_SAVE_NAME = #{saveName}
+			,FILES_FILE_PATH = #{filePath}
+			,FILES_FILE_SIZE = #{fileSize}
+	
 	</insert>
 
 	<update id="updateContent" parameterType = "BoardVO">
@@ -41,6 +53,15 @@
 			BOARD.CONTENTS
 		WHERE
 			CONTENT_NO = #{contentNo}
+
+	</delete>
+	
+	<delete id="deleteFile" parameterType = "int">
+
+		DELETE FROM
+			board.files
+		WHERE
+			files_board_no = #{contentNo}
 
 	</delete>
 	
@@ -103,12 +124,17 @@
 			,DATE_FORMAT(CONTENT_REGDATE, '%x-%c-%d') AS 'date'
 			,US.USER_NAME AS 'userName'
 			,US.SEQ_USER_NO AS 'userNo'
+			,FI.files_save_name AS 'saveName'
 		FROM
 			BOARD.CONTENTS CT
 		INNER JOIN
 			BOARD.USERS US
 		ON
 			CT.CONTENT_USER_NO = US.SEQ_USER_NO
+		LEFT OUTER JOIN
+			BOARD.FILES FI
+		ON
+			CT.CONTENT_NO = FI.FILES_BOARD_NO
 		WHERE
 			CT.CONTENT_NO = #{contentNo}
 	

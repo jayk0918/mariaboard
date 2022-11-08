@@ -45,7 +45,7 @@ public interface BoardMapper {
 	 * @return 등록 결과
 	 * @exception Exception
 	 */
-	void insertContent(BoardVO vo) throws Exception;
+	int insertContent(BoardVO vo) throws Exception;
 
 	/**
 	 * 글을 수정한다.
@@ -91,5 +91,9 @@ public interface BoardMapper {
 	int updateHit(int contentNo) throws Exception;
 	
 	BoardVO getContent(int contentNo);
+	
+	int fileInsert(BoardVO vo);
+	
+	int deleteFile(int contentNo);
 	
 }

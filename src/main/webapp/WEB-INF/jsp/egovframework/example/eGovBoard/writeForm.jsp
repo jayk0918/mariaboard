@@ -21,7 +21,7 @@
 				<h1>게시판</h1>
 				<div id="board">
 					<div id="writeForm">
-						<form action="write.do" method="post">
+						<form action="write.do" method="post" enctype = "multipart/form-data">
 							<!-- 제목 -->
 							<div class="form-group">
 								<label class="form-text" for="txt-title">제목</label>
@@ -35,6 +35,8 @@
 							
 							<button id="btn_add" type="submit">등록</button>
 							<a id="btn_cancel" href="${pageContext.request.contextPath}/list.do">취소</a>
+							
+							<input id="file" type="file" name="file" value="">
 							
 						</form>
 						<!-- //form -->

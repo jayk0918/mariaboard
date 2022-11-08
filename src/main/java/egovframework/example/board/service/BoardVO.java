@@ -26,6 +26,12 @@ public class BoardVO extends SampleDefaultVO {
 	private int searchedCategory;
 	private int searchStatus;
 	
+	private int filesNo;
+	private String orgName;
+	private String saveName;
+	private String filePath;
+	private long fileSize;
+
 	public BoardVO() {}
 
 	public String getUserId() {
@@ -140,6 +146,45 @@ public class BoardVO extends SampleDefaultVO {
 	public void setSearchStatus(int searchStatus) {
 		this.searchStatus = searchStatus;
 	}
+	public int getFilesNo() {
+		return filesNo;
+	}
+
+	public void setFilesNo(int filesNo) {
+		this.filesNo = filesNo;
+	}
+
+	public String getOrgName() {
+		return orgName;
+	}
+
+	public void setOrgName(String orgName) {
+		this.orgName = orgName;
+	}
+
+	public String getSaveName() {
+		return saveName;
+	}
+
+	public void setSaveName(String saveName) {
+		this.saveName = saveName;
+	}
+
+	public long getFileSize() {
+		return fileSize;
+	}
+
+	public void setFileSize(long fileSize) {
+		this.fileSize = fileSize;
+	}
+	
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
 
 	@Override
 	public String toString() {
@@ -147,7 +192,8 @@ public class BoardVO extends SampleDefaultVO {
 				+ ", userNo=" + userNo + ", userName=" + userName + ", contentNo=" + contentNo + ", date=" + date
 				+ ", hit=" + hit + ", searchKeyword=" + searchKeyword + ", searchCategory=" + searchCategory
 				+ ", searchedKeyword=" + searchedKeyword + ", searchedCategory=" + searchedCategory + ", searchStatus="
-				+ searchStatus + "]";
+				+ searchStatus + ", filesNo=" + filesNo + ", orgName=" + orgName + ", saveName=" + saveName
+				+ ", filePath=" + filePath + ", fileSize=" + fileSize + "]";
 	}
 	
 }

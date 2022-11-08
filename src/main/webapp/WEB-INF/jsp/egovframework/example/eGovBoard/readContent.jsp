@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <!DOCTYPE html>
 <html>
@@ -59,6 +60,11 @@
 							<!--<input type = "hidden" id = "editContent">-->
 						</div>
 						
+						<c:if test = "${content.saveName != null}">
+							<div class="imgView" >
+								<img class="imgItem" src = "${pageContext.request.contextPath}/upload/${content.saveName}">
+							</div>
+						</c:if>
 						<a id = "returnList" class = "btn" href="${pageContext.request.contextPath}/list.do" >목록</a>
 						
 						<c:if test = "${authUser.userNo == content.userNo}">
@@ -95,10 +101,13 @@ $(document).ready(function(){
 */
 $("#deletion").on("click",function(){
 	console.log("삭제버튼 클릭");
-	var contentNo = ${content.contentNo};
+	var contentNo = ${content.contentNo}
 	console.log(contentNo);
 	
-	$.ajax({
+	var selectDel = confirm("삭제하시겠습니까?");
+	
+	if(selectDel == true){
+		$.ajax({
 			url : "${pageContext.request.contextPath}/delete.do",
 			type : "post",
 			data : JSON.stringify(contentNo),
@@ -111,7 +120,11 @@ $("#deletion").on("click",function(){
 			error : function(XHR, status, error) {
 				console.log(status + ' : ' + error);
 			}
-		});
+		})
+	}else{
+		alert("취소하였습니다.");
+	}
+	
 	
 });
 

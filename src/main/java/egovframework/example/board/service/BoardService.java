@@ -17,6 +17,8 @@ package egovframework.example.board.service;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * @Class Name : EgovSampleService.java
  * @Description : EgovSampleService Class
@@ -42,7 +44,7 @@ public interface BoardService {
 	 * @return 등록 결과
 	 * @exception Exception
 	 */
-	void insertContent(BoardVO vo) throws Exception;
+	int insertContent(BoardVO vo) throws Exception;
 
 	/**
 	 * 글을 수정한다.
@@ -89,5 +91,9 @@ public interface BoardService {
 	int updateHit(int contentNo) throws Exception;
 	
 	BoardVO getContent(int contentNo);
+	
+	String fileSave(BoardVO vo, MultipartFile file);
+	
+	int deleteFile(String contentNo) throws Exception;
 
 }

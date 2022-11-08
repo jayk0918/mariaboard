@@ -15,7 +15,12 @@
  */
 package egovframework.example.board.service.impl;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -23,6 +28,7 @@ import org.egovframe.rte.fdl.cmmn.EgovAbstractServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import egovframework.example.board.service.BoardService;
 import egovframework.example.board.service.BoardVO;
@@ -68,9 +74,9 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	 * @return 등록 결과
 	 * @exception Exception
 	 */
-	public void insertContent(BoardVO vo) throws Exception {
+	public int insertContent(BoardVO vo) throws Exception {
 		LOGGER.debug(vo.toString());
-		boardDAO.insertContent(vo);
+		return boardDAO.insertContent(vo);
 	}
 
 	/**
@@ -92,6 +98,11 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	public int deleteContent(String contentNo) throws Exception {
 		int convertNo = Integer.parseInt(contentNo);
 		return boardDAO.deleteContent(convertNo);
+	}
+	
+	public int deleteFile(String contentNo) throws Exception {
+		int convertNo = Integer.parseInt(contentNo);
+		return boardDAO.deleteFile(convertNo);
 	}
 
 	/**
@@ -140,4 +151,37 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		return boardDAO.getContent(contentNo);
 	}
 	
+	public String fileSave(BoardVO vo, MultipartFile file) {
+		String saveDir = "C:\\Users\\jespe\\Downloads\\boardfiles\\";
+		String orgName = file.getOriginalFilename();
+		String exName = orgName.substring(orgName.lastIndexOf("."));
+		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+		
+		String filePath = saveDir + saveName;
+		long fileSize = file.getSize();
+		
+		BoardVO bVO = new BoardVO();
+		int boardNo = vo.getContentNo();
+		bVO.setOrgName(orgName);
+		bVO.setSaveName(saveName);
+		bVO.setFilePath(filePath);
+		bVO.setFileSize(fileSize);
+		bVO.setContentNo(boardNo);
+		
+		try {
+			byte[] fileData = file.getBytes();
+			OutputStream os = new FileOutputStream(filePath);
+			BufferedOutputStream bos = new BufferedOutputStream(os);
+			bos.write(fileData);
+			bos.close();
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
+		boardDAO.fileInsert(bVO);
+		
+		return saveName;
+	}
+
 }
