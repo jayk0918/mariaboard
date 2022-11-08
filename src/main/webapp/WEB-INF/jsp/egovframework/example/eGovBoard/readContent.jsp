@@ -93,7 +93,7 @@
 </body>
 
 <script type = "text/javascript">
-/*
+/**
 $(document).ready(function(){
 	$("#editConfirm").css('display', 'none');
 	$("#editCancel").css('display', 'none');
