@@ -36,3 +36,13 @@
 	background-color : #007bff;
 	color : white;
 }
+
+.imgView{
+	display : flex;
+	justify-content : center;
+}
+
+.imgView > img{
+	width : 400px;
+	height : 300px;
+}
