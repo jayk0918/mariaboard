@@ -46,6 +46,20 @@
 			CONTENT_NO = #{contentNo}
 
 	</update>
+	
+	<update id="updateFile" parameterType = "BoardVO">
+
+		UPDATE
+			BOARD.FILES
+		SET
+			FILES_ORG_NAME = #{orgName}
+			,FILES_SAVE_NAME = #{saveName}
+			,FILES_FILE_PATH = #{filePath}
+			,FILES_FILE_SIZE = #{fileSize}
+		WHERE
+			FILES_NO = #{filesNo}
+
+	</update>
 
 	<delete id="deleteContent" parameterType = "int">
 
@@ -59,10 +73,17 @@
 	<delete id="deleteFile" parameterType = "int">
 
 		DELETE FROM
-			board.files
+			BOARD.FILES
 		WHERE
-			files_board_no = #{contentNo}
+			FILES_BOARD_NO = #{contentNo}
 
+	</delete>
+	
+	<delete id = "removeFile" parameterType = "int">
+		DELETE FROM
+			BOARD.FILES
+		WHERE
+			FILES_NO = #{filesNo}
 	</delete>
 	
 	<!--  
@@ -125,6 +146,7 @@
 			,US.USER_NAME AS 'userName'
 			,US.SEQ_USER_NO AS 'userNo'
 			,FI.files_save_name AS 'saveName'
+			,FI.files_no AS 'filesNo'
 		FROM
 			BOARD.CONTENTS CT
 		INNER JOIN

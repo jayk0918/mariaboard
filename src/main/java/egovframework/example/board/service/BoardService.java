@@ -95,5 +95,9 @@ public interface BoardService {
 	String fileSave(BoardVO vo, MultipartFile file);
 	
 	int deleteFile(String contentNo) throws Exception;
+	
+	int updateFile(BoardVO vo, MultipartFile file);
+	
+	int removeFile(BoardVO vo);
 
 }

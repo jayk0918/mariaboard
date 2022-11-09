@@ -24,7 +24,7 @@
 				<h1>게시글 조회</h1>
 				<div id="board">
 					<div id="writeForm">
-						<form action="edit.do" method="post">
+						<form action="edit.do" method="post" enctype = "multipart/form-data">
 							<input type = "hidden" name = "contentNo" value = "${content.contentNo}">
 							<!-- 제목 -->
 							<div class="form-group">
@@ -40,6 +40,9 @@
 							<a id="btn_cancel" href="${pageContext.request.contextPath}/list.do">취소</a>
 							<button id="btn_add" type="submit">등록</button>
 							
+							<input id="file" type="file" name="file" value="$">
+							<input type = "hidden" name = "saveName" value = "${content.saveName}">
+							<input type = "hidden" name = "filesNo" value = "${content.filesNo}">
 						</form>
 						<!-- //form -->
 					</div>

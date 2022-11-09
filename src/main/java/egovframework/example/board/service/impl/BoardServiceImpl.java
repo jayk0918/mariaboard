@@ -183,5 +183,43 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		
 		return saveName;
 	}
+	
+	public int updateFile(BoardVO vo, MultipartFile file) {
+		String saveDir = "C:\\Users\\jespe\\Downloads\\boardfiles\\";
+		String orgName = file.getOriginalFilename();
+		String exName = orgName.substring(orgName.lastIndexOf("."));
+		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
+		
+		String filePath = saveDir + saveName;
+		long fileSize = file.getSize();
+		
+		BoardVO bVO = new BoardVO();
+		int filesNo = vo.getFilesNo();
+		bVO.setOrgName(orgName);
+		bVO.setSaveName(saveName);
+		bVO.setFilePath(filePath);
+		bVO.setFileSize(fileSize);
+		bVO.setFilesNo(filesNo);
+		
+		try {
+			byte[] fileData = file.getBytes();
+			OutputStream os = new FileOutputStream(filePath);
+			BufferedOutputStream bos = new BufferedOutputStream(os);
+			bos.write(fileData);
+			bos.close();
+			
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
+		return boardDAO.updateFile(bVO);
+	}
+	
+	
+	public int removeFile(BoardVO vo) {
+		int filesNo = vo.getFilesNo();
+		return boardDAO.removeFile(filesNo);
+	}
+	
 
 }

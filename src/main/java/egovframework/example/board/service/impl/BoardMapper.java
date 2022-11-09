@@ -96,4 +96,8 @@ public interface BoardMapper {
 	
 	int deleteFile(int contentNo);
 	
+	int updateFile(BoardVO vo);
+	
+	int removeFile(int filesNo);
+	
 }

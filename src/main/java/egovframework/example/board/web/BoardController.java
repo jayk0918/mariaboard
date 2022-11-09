@@ -1,5 +1,6 @@
 package egovframework.example.board.web;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -125,7 +126,7 @@ public class BoardController {
 	}
 	
 	@GetMapping(value = "/editForm.do")
-	public String getEditForm(@RequestParam int contentNo, Model model) {
+	public String getEditForm(@RequestParam int contentNo, Model model) throws IOException {
 		
 		BoardVO content = boardService.getContent(contentNo);
 		model.addAttribute("content", content);
@@ -134,8 +135,28 @@ public class BoardController {
 	}
 	
 	@PostMapping(value = "/edit.do")
-	public String editContent(@ModelAttribute BoardVO vo) throws Exception {
+	public String editContent(@ModelAttribute BoardVO vo,
+							  @RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+		
 		boardService.updateContent(vo);
+		String fileExist = vo.getSaveName();
+		if(fileExist.equals("")) {
+			fileExist = null;
+		}
+		
+		System.out.println("파일있니? " + fileExist);
+		if(fileExist != null) {
+			if(file.isEmpty() != true) {
+				boardService.updateFile(vo, file);
+			}else {
+				boardService.removeFile(vo);
+			}
+		}else {
+			if(file.isEmpty() != true) {
+				boardService.fileSave(vo, file);
+			}
+		}
+		
 		return "redirect:/list.do";
 	}
 	
