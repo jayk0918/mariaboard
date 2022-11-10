@@ -40,7 +40,14 @@
 							<a id="btn_cancel" href="${pageContext.request.contextPath}/list.do">취소</a>
 							<button id="btn_add" type="submit">등록</button>
 							
-							<input id="file" type="file" name="file" value="$">
+							<c:choose>
+								<c:when test = "${content.saveName == null}">
+									<input id="file" type="file" name="file" value="">
+								</c:when>
+								<c:otherwise>
+									<input id = "file" type = "file" name = "file"><a href= "">파일명</a>
+								</c:otherwise>
+							</c:choose>
 							<input type = "hidden" name = "saveName" value = "${content.saveName}">
 							<input type = "hidden" name = "filesNo" value = "${content.filesNo}">
 						</form>

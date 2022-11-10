@@ -112,7 +112,7 @@ $("#deletion").on("click",function(){
 			type : "post",
 			data : JSON.stringify(contentNo),
 			contentType : "application/json",
-			dataType : "text",
+			dataType : "html", //"text",
 			success : function(result){
 				alert("삭제 성공");
 				window.location.href = "${pageContext.request.contextPath}/list.do";

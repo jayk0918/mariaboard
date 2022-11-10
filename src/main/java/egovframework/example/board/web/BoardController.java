@@ -139,12 +139,12 @@ public class BoardController {
 							  @RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
 		
 		boardService.updateContent(vo);
+		
 		String fileExist = vo.getSaveName();
 		if(fileExist.equals("")) {
 			fileExist = null;
 		}
 		
-		System.out.println("파일있니? " + fileExist);
 		if(fileExist != null) {
 			if(file.isEmpty() != true) {
 				boardService.updateFile(vo, file);
