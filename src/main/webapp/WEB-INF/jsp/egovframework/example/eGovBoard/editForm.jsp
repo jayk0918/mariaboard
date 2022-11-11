@@ -42,10 +42,14 @@
 							
 							<c:choose>
 								<c:when test = "${content.saveName == null}">
-									<input id="file" type="file" name="file" value="">
+									<input id="file" type="file" name="file">
 								</c:when>
 								<c:otherwise>
-									<input id = "file" type = "file" name = "file"><a href= "">파일명</a>
+									<button id = "editFile"  type = "button">수정</button>
+									<button id = "cancelEdit"  type = "button">취소</button>
+									<input id = "file" type = "hidden" name = "file">
+									<span id = "orgFile">${content.saveName}</span>
+									<input id = "editIdentify" name = "editIdentify" type = "hidden" value = "0">
 								</c:otherwise>
 							</c:choose>
 							<input type = "hidden" name = "saveName" value = "${content.saveName}">
@@ -63,5 +67,29 @@
 	</div>
 	<!-- //wrap -->
 </body>
+
+<script type = "text/javascript">
+$(document).ready(function(){
+	$("#cancelEdit").hide();
+});
+
+$("#editFile").on("click", function(){
+	$("#file").prop("type","file");
+	$("#editFile").hide();
+	$("#orgFile").hide();
+	$("#cancelEdit").show();
+	$("#editIdentify").val(1);
+});
+
+$("#cancelEdit").on("click",function(){
+	$("#file").prop("type","hidden");
+	$("#editFile").show();
+	$("#orgFile").show();
+	$("#cancelEdit").hide();
+	$("#editIdentify").val(0);
+});
+
+
+</script>
 
 </html>

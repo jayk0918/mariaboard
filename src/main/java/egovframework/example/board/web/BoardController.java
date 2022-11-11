@@ -136,24 +136,30 @@ public class BoardController {
 	
 	@PostMapping(value = "/edit.do")
 	public String editContent(@ModelAttribute BoardVO vo,
-							  @RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
+							  @RequestParam(value = "file", required = false) MultipartFile file,
+							  @RequestParam(value = "editIdentify", required = false) int identify) throws Exception {
 		
-		boardService.updateContent(vo);
 		
-		String fileExist = vo.getSaveName();
-		if(fileExist.equals("")) {
-			fileExist = null;
-		}
-		
-		if(fileExist != null) {
-			if(file.isEmpty() != true) {
-				boardService.updateFile(vo, file);
-			}else {
-				boardService.removeFile(vo);
-			}
+		if(identify == 0) {
+			boardService.updateContent(vo);
 		}else {
-			if(file.isEmpty() != true) {
-				boardService.fileSave(vo, file);
+			boardService.updateContent(vo);
+			
+			String fileExist = vo.getSaveName();
+			if(fileExist.equals("")) {
+				fileExist = null;
+			}
+			
+			if(fileExist != null) {
+				if(file.isEmpty() != true) {
+					boardService.updateFile(vo, file);
+				}else {
+					boardService.removeFile(vo);
+				}
+			}else {
+				if(file.isEmpty() != true) {
+					boardService.fileSave(vo, file);
+				}
 			}
 		}
 		
