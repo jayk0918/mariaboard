@@ -141,7 +141,7 @@ public class BoardController {
 		
 		
 		if(identify == 0) {
-			boardService.updateContent(vo);
+			boardService.updateContent(vo);	
 		}else {
 			boardService.updateContent(vo);
 			

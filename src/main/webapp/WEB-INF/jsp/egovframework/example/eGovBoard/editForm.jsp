@@ -43,6 +43,7 @@
 							<c:choose>
 								<c:when test = "${content.saveName == null}">
 									<input id="file" type="file" name="file">
+									<input id = "editIdentify" name = "editIdentify" type = "hidden" value = "-1">
 								</c:when>
 								<c:otherwise>
 									<button id = "editFile"  type = "button">수정</button>
