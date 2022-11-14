@@ -65,23 +65,34 @@
 								<img class="imgItem" src = "${pageContext.request.contextPath}/upload/${content.saveName}">
 							</div>
 						</c:if>
-						<a id = "returnList" class = "btn" href="${pageContext.request.contextPath}/list.do" >목록</a>
 						
-						<c:if test = "${authUser.userNo == content.userNo}">
-							<a id = "edit" href = "${pageContext.request.contextPath}/editForm.do?contentNo=${content.contentNo}" class = "btn">수정</a>
-							<!-- 
-							<button id = "edit" type = "button">수정</button>
-							<button id = "editConfirm" type = "button">확인</button>
-							<button id = "editCancel" type = "button"> 취소</button>
-							-->
-						</c:if>
+						<br>
 						
-						<c:if test="${authUser.userNo == 3 || authUser.userNo == content.userNo}">
-							<button id = "deletion" class = "btn">삭제</td>
-						</c:if>
+						<div id = "replyArea">
+							<input id = "reply" type = "text" name = "reply" placeholder = "댓글 입력하기">
+							<button id = "replySubmit" type = "submit">댓글 쓰기</button>
+						</div>
+						
+						<div id = "buttons">
+							<a id = "returnList" class = "btn" href="${pageContext.request.contextPath}/list.do" >목록</a>
+							
+							<c:if test = "${authUser.userNo == content.userNo}">
+								<a id = "edit" href = "${pageContext.request.contextPath}/editForm.do?contentNo=${content.contentNo}" class = "btn">수정</a>
+								<!-- 
+								<button id = "edit" type = "button">수정</button>
+								<button id = "editConfirm" type = "button">확인</button>
+								<button id = "editCancel" type = "button"> 취소</button>
+								-->
+							</c:if>
+							
+							<c:if test="${authUser.userNo == 3 || authUser.userNo == content.userNo}">
+								<button id = "deletion" class = "btn">삭제</td>
+							</c:if>
+						</div>
 						
 					</div>
 					<!-- //read -->
+					
 				</div>
 				<!-- //board -->
 			</div>
@@ -93,12 +104,11 @@
 </body>
 
 <script type = "text/javascript">
-/**
+
 $(document).ready(function(){
-	$("#editConfirm").css('display', 'none');
-	$("#editCancel").css('display', 'none');
+	fetchList();
 });
-*/
+
 $("#deletion").on("click",function(){
 	console.log("삭제버튼 클릭");
 	var contentNo = ${content.contentNo}
@@ -108,7 +118,7 @@ $("#deletion").on("click",function(){
 	
 	if(selectDel == true){
 		$.ajax({
-			url : "${pageContext.request.contextPath}/delete.do",
+			url : "${pageContext.request.contextPath}/api/delete.do",
 			type : "post",
 			data : JSON.stringify(contentNo),
 			contentType : "application/json",
@@ -125,8 +135,65 @@ $("#deletion").on("click",function(){
 		alert("취소하였습니다.");
 	}
 	
-	
 });
+
+$("#replySubmit").on("click",function(){
+	var contentNo = ${content.contentNo};
+	console.log("댓글쓰기");
+});
+
+function fetchList(){
+	var contentNo = ${content.contentNo};
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/api/list.do",
+		type : "post",
+		contentType : "application/json; charset=utf-8",
+		data : JSON.stringify(contentNo),
+		dataType : "json",
+		success : function(boardVOList){
+			console.log(boardVOList);
+			
+			for(var i=0; i<boardVOList.length; i++){
+				render(boardVOList[i], 'down');
+			}
+		},
+		error : function(XHR, status, error) {
+			console.log(status + ' : ' + error);
+		}
+	});
+}
+
+function render(boardVO, opt){
+	console.log('render()');
+	var str = '';
+	
+	str += '<table id="t'+boardVO.replyNo+'" class="replyRead" border = 1>';
+	str += '    <colgroup>' ;
+	str += '        <col style="width: 10%;">' ;
+	str += '        <col style="width: 40%;">' ;
+	str += '        <col style="width: 40%;">' ;
+	str += '        <col style="width: 10%;">' ;
+	str += '    </colgroup>' ;
+	str += '    <tr>' ;
+	str += '        <td>'+boardVO.replyNo+'</td>' ;
+	str += '        <td>'+boardVO.userName+'</td>' ;
+	str += '        <td>'+boardVO.date+'</td>' ;
+	str += '        <td><button class = "btnDelete" type = "button" data-no = '+boardVO.replyNo+'>삭제</button></td>' ;
+	str += '    </tr>' ;
+	str += '    <tr>' ;
+	str += '        <td colspan=5 class="text-left">'+boardVO.content+'</td>' ;
+	str += '    </tr>' ;
+	str += '</table>' ;
+	
+	if(opt == 'down'){
+		$('#replyArea').append(str);
+	}else if(opt == 'up'){
+		$('#replyArea').prepend(str);
+	}else{
+		console.log('opt error');
+	}
+};
 
 /*
 $("#edit").on("click",function(){

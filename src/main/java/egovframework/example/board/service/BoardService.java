@@ -99,5 +99,7 @@ public interface BoardService {
 	int updateFile(BoardVO vo, MultipartFile file);
 	
 	int removeFile(BoardVO vo);
+	
+	List<BoardVO> getReplyList(String contentNo);
 
 }

@@ -221,5 +221,9 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		return boardDAO.removeFile(filesNo);
 	}
 	
+	public List<BoardVO> getReplyList(String contentNo){
+		int parseNo = Integer.parseInt(contentNo);
+		return boardDAO.getReplyList(parseNo);
+	}
 
 }

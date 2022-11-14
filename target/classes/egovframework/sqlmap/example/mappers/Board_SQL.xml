@@ -220,4 +220,24 @@
 		
 	</select>
 	
+	<select id = "getReplyList" parameterType = "int" resultType = "BoardVO">
+	
+		SELECT RP.REPLY_NO AS 'replyNo'
+			,RP.REPLY_CONTENT AS 'reply'
+			,DATE_FORMAT(RP.REPLY_REGDATE, '%x-%c-%d %H:%i') AS 'date'
+			,US.USER_NAME AS 'userName'
+		FROM
+			BOARD.REPLY RP
+		INNER JOIN
+			BOARD.USERS US
+		ON
+			RP.USER_NO = US.SEQ_USER_NO
+		WHERE
+			RP.CONTENT_NO = #{contentNo}
+		ORDER BY
+			RP.REPLY_REGDATE DESC
+	
+	</select>
+	
+	
 </mapper>

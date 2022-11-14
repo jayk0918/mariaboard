@@ -139,7 +139,6 @@ public class BoardController {
 							  @RequestParam(value = "file", required = false) MultipartFile file,
 							  @RequestParam(value = "editIdentify", required = false) int identify) throws Exception {
 		
-		
 		if(identify == 0) {
 			boardService.updateContent(vo);	
 		}else {
@@ -167,12 +166,19 @@ public class BoardController {
 	}
 	
 	@ResponseBody
-	@PostMapping(value = "/delete.do")
+	@PostMapping(value = "/api/delete.do")
 	public int deleteContent(@RequestBody String contentNo) throws Exception {
 		boardService.deleteFile(contentNo);
 		return boardService.deleteContent(contentNo);
 	}
 	
+	@ResponseBody
+	@PostMapping(value = "/api/list.do")
+	public List<BoardVO> getReplyList(@RequestBody String contentNo){
+		List<BoardVO> replies = boardService.getReplyList(contentNo);
+		System.out.println("replies : " + replies);
+		return replies;
+	}
 	/*
 	@ResponseBody
 	@RequestMapping(value = "/edit.do")

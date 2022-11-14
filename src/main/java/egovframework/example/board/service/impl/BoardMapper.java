@@ -100,4 +100,6 @@ public interface BoardMapper {
 	
 	int removeFile(int filesNo);
 	
+	List<BoardVO> getReplyList(int contentNo);
+	
 }
