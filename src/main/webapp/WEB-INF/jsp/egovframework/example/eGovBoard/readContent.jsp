@@ -71,6 +71,8 @@
 						<div id = "replyArea">
 							<input id = "reply" type = "text" name = "reply" placeholder = "댓글 입력하기">
 							<button id = "replySubmit" type = "submit">댓글 쓰기</button>
+							<div id = "replyList">
+							</div>
 						</div>
 						
 						<div id = "buttons">
@@ -122,8 +124,8 @@ $("#deletion").on("click",function(){
 			type : "post",
 			data : JSON.stringify(contentNo),
 			contentType : "application/json",
-			dataType : "html", //"text",
-			success : function(result){
+			dataType : "json",
+			success : function(){
 				alert("삭제 성공");
 				window.location.href = "${pageContext.request.contextPath}/list.do";
 			},
@@ -134,7 +136,6 @@ $("#deletion").on("click",function(){
 	}else{
 		alert("취소하였습니다.");
 	}
-	
 });
 
 $("#replySubmit").on("click",function(){
@@ -148,7 +149,7 @@ function fetchList(){
 	$.ajax({
 		url : "${pageContext.request.contextPath}/api/list.do",
 		type : "post",
-		contentType : "application/json; charset=utf-8",
+		contentType : "application/json",
 		data : JSON.stringify(contentNo),
 		dataType : "json",
 		success : function(boardVOList){
@@ -171,25 +172,24 @@ function render(boardVO, opt){
 	str += '<table id="t'+boardVO.replyNo+'" class="replyRead" border = 1>';
 	str += '    <colgroup>' ;
 	str += '        <col style="width: 10%;">' ;
-	str += '        <col style="width: 40%;">' ;
-	str += '        <col style="width: 40%;">' ;
 	str += '        <col style="width: 10%;">' ;
+	str += '        <col style="width: 40%;">' ;
+	str += '        <col style="width: 20%;">' ;
+	str += '        <col style="width: 20%;">' ;
 	str += '    </colgroup>' ;
 	str += '    <tr>' ;
 	str += '        <td>'+boardVO.replyNo+'</td>' ;
 	str += '        <td>'+boardVO.userName+'</td>' ;
+	str += '        <td class="text-left">'+boardVO.reply+'</td>' ;
 	str += '        <td>'+boardVO.date+'</td>' ;
 	str += '        <td><button class = "btnDelete" type = "button" data-no = '+boardVO.replyNo+'>삭제</button></td>' ;
-	str += '    </tr>' ;
-	str += '    <tr>' ;
-	str += '        <td colspan=5 class="text-left">'+boardVO.content+'</td>' ;
 	str += '    </tr>' ;
 	str += '</table>' ;
 	
 	if(opt == 'down'){
-		$('#replyArea').append(str);
+		$('#replyList').append(str);
 	}else if(opt == 'up'){
-		$('#replyArea').prepend(str);
+		$('#replyList').prepend(str);
 	}else{
 		console.log('opt error');
 	}

@@ -172,9 +172,9 @@ public class BoardController {
 		return boardService.deleteContent(contentNo);
 	}
 	
-	@ResponseBody
+	
 	@PostMapping(value = "/api/list.do")
-	public List<BoardVO> getReplyList(@RequestBody String contentNo){
+	public @ResponseBody List<BoardVO> getReplyList(@RequestBody String contentNo){
 		List<BoardVO> replies = boardService.getReplyList(contentNo);
 		System.out.println("replies : " + replies);
 		return replies;
