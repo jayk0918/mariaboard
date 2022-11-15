@@ -46,3 +46,31 @@
 	width : 400px;
 	height : 300px;
 }
+
+#buttons{
+	margin-top : 50px;
+}
+
+#reply{
+	width : 800px;
+	height : 35px;
+}
+
+input::placeholder{
+	font-size : 15px;
+	text-align : center;
+}
+
+#replySubmit{
+	background-color : #cbf77b;
+}
+
+#replyList{
+	margin-top : 20px;
+}
+
+.replyRead{
+	margin-top : 10px;
+	margin-bottom : 10px;
+	padding : 10px;
+}

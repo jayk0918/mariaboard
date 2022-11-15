@@ -101,5 +101,11 @@ public interface BoardService {
 	int removeFile(BoardVO vo);
 	
 	List<BoardVO> getReplyList(String contentNo);
+	
+	int insertReply(BoardVO vo);
+	
+	BoardVO verifyUser(BoardVO vo);
+	
+	int deleteReply(String replyNo);
 
 }

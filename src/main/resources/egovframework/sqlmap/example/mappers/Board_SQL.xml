@@ -239,5 +239,36 @@
 	
 	</select>
 	
+	<insert id = "insertReply" parameterType = "BoardVO">
+		
+		INSERT INTO
+			board.reply
+		SET
+			reply_content = #{reply},
+			content_no = #{contentNo},
+			user_no = #{userNo}
+	
+	</insert>
+	
+	<select id = "verifyUser" parameterType = "BoardVO" resultType = "BoardVO">
+	
+		SELECT
+			ifnull(user_no, -1)
+		FROM
+			board.reply
+		WHERE
+			reply_no = #{replyNo}
+		AND
+			user_no = #{userNo}
+	
+	</select>
+	
+	<delete id = "deleteReply" parameterType = "int">
+		DELETE from
+			board.reply
+		WHERE
+			reply_no = #{replyNo}
+	</delete>
+	
 	
 </mapper>

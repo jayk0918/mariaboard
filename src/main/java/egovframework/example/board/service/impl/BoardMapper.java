@@ -102,4 +102,10 @@ public interface BoardMapper {
 	
 	List<BoardVO> getReplyList(int contentNo);
 	
+	int insertReply(BoardVO vo);
+	
+	BoardVO verifyUser(BoardVO vo);
+	
+	int deleteReply(int replyNo);
+	
 }

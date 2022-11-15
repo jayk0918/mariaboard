@@ -70,7 +70,7 @@
 						
 						<div id = "replyArea">
 							<input id = "reply" type = "text" name = "reply" placeholder = "댓글 입력하기">
-							<button id = "replySubmit" type = "submit">댓글 쓰기</button>
+							<button id = "replySubmit" class = "btn" type = "submit">댓글 쓰기</button>
 							<div id = "replyList">
 							</div>
 						</div>
@@ -80,11 +80,6 @@
 							
 							<c:if test = "${authUser.userNo == content.userNo}">
 								<a id = "edit" href = "${pageContext.request.contextPath}/editForm.do?contentNo=${content.contentNo}" class = "btn">수정</a>
-								<!-- 
-								<button id = "edit" type = "button">수정</button>
-								<button id = "editConfirm" type = "button">확인</button>
-								<button id = "editCancel" type = "button"> 취소</button>
-								-->
 							</c:if>
 							
 							<c:if test="${authUser.userNo == 3 || authUser.userNo == content.userNo}">
@@ -140,14 +135,93 @@ $("#deletion").on("click",function(){
 
 $("#replySubmit").on("click",function(){
 	var contentNo = ${content.contentNo};
-	console.log("댓글쓰기");
+	var userNo = ${content.userNo};
+	var reply = $("#reply").val();
+	
+	var BoardVO = {
+		contentNo : contentNo,
+		reply : reply,
+		userNo : userNo
+	}
+	
+	if(reply.length == 0){
+		alert("내용을 입력해주세요");
+	}else{
+		$.ajax({
+			url : "${pageContext.request.contextPath}/api/replyAdd.do",
+			type : "post",
+			data : JSON.stringify(BoardVO),
+			contentType : "application/json",
+			dataType : "json",
+			success : function(){
+				alert("등록되었습니다.");
+				location.reload();
+			},
+			error : function(XHR, status, error) {
+				console.log(status + ' : ' + error);
+			}
+		});
+	}
 });
+
+$("#replyArea").on("click", ".btnDelete", function(){
+	console.log("삭제버튼");
+	var $this = $(this);
+	var replyNo = $this.data("no");
+	var userNo = ${content.userNo};
+	
+	var BoardVO = {
+		replyNo : replyNo,
+		userNo : userNo
+	}
+	
+	console.log(BoardVO);
+	
+	$.ajax({
+		url : "${pageContext.request.contextPath}/api/verifyUser.do",
+		type : "post",
+		data : JSON.stringify(BoardVO),
+		contentType : "application/json",
+		dataType : "json",
+		success : function(result){
+			console.log(result);
+			/*
+			if(result == userNo || userNo == 3){
+				var selectDel = confirm("삭제하시겠습니까?");
+				
+				if(selectDel == true){
+					$.ajax({
+						url : "${pageContext.request.contextPath}/api/replyDelete.do",
+						type : "post",
+						data : JSON.stringify(replyNo),
+						contentType : "application/json",
+						dataType : "json",
+						success : function(){
+							alert("삭제되었습니다.");
+							location.reload();
+						},
+						error : function(XHR, status, error) {
+							console.log(status + ' : ' + error);
+						}
+					});
+				}
+				
+			}else{
+				alert("권한이 없습니다.");
+			}*/
+		},
+		error : function(XHR, status, error) {
+			console.log(status + ' : ' + error);
+		}
+	});
+});
+
 
 function fetchList(){
 	var contentNo = ${content.contentNo};
 	
 	$.ajax({
-		url : "${pageContext.request.contextPath}/api/list.do",
+		url : "${pageContext.request.contextPath}/api/replylist.do",
 		type : "post",
 		contentType : "application/json",
 		data : JSON.stringify(contentNo),
@@ -158,6 +232,7 @@ function fetchList(){
 			for(var i=0; i<boardVOList.length; i++){
 				render(boardVOList[i], 'down');
 			}
+			
 		},
 		error : function(XHR, status, error) {
 			console.log(status + ' : ' + error);
@@ -169,7 +244,7 @@ function render(boardVO, opt){
 	console.log('render()');
 	var str = '';
 	
-	str += '<table id="t'+boardVO.replyNo+'" class="replyRead" border = 1>';
+	str += '<table id="t'+boardVO.replyNo+'" class="replyRead">';
 	str += '    <colgroup>' ;
 	str += '        <col style="width: 10%;">' ;
 	str += '        <col style="width: 10%;">' ;
@@ -195,67 +270,8 @@ function render(boardVO, opt){
 	}
 };
 
-/*
-$("#edit").on("click",function(){
-	
-	var contentNo = ${content.contentNo};
-	
-	$("#originalTitle").hide();
-	$("#originalContent").hide();
-	$("#edit").hide();
-	$("#deletion").hide();
-	$("#editTitle").attr('type', 'text');
-	$("#editContent").attr('type', 'text');
-	$("#editConfirm").css('display', 'block');
-	$("#editCancel").css('display', 'block');
-	
-});
 
 
-$("#editConfirm").on("click", function(){
-	var title = $("#editTitle").val();
-	var content = $("#editContent").val();
-	var contentNo = $("#contentNo").val();
-	
-	var BoardVO ={
-			"title" : title,
-			"content" : content,
-			"contentNo" : contentNo
-		};
-	
-	console.log(title);
-	console.log(content);
-	console.log(contentNo);
-	console.log(BoardVO);
-	
-	$.ajax({
-		url : "${pageContext.request.contextPath}/edit.do",
-		type : "post",
-		data : JSON.parse(BoardVO),
-		contentType : "application/json",
-		dataType : "json",
-		success : function(result){
-			alert("수정 성공");
-			window.location.href = "${pageContext.request.contextPath}/list.do";
-		},
-		error : function(XHR, status, error) {
-			console.log(status + ' : ' + error);
-		}
-	});
-	
-});
-
-$("#editCancel").on("click", function(){
-	$("#editConfirm").css('display', 'none');
-	$("#editCancel").css('display', 'none');
-	$("#editTitle").attr('type', 'hidden');
-	$("#editContent").attr('type', 'hidden');
-	$("#originalTitle").show();
-	$("#originalContent").show();
-	$("#edit").show();
-	$("#deletion").show();
-});
-*/
 </script>
 
 </html>

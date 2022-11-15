@@ -116,10 +116,12 @@ public class BoardController {
 	}
 	
 	@GetMapping(value = "/readContent.do")
-	public String readContent(@RequestParam int contentNo, Model model) throws Exception {
-
+	public String readContent(HttpSession session, @RequestParam int contentNo, Model model) throws Exception {
+		BoardVO vo = (BoardVO) session.getAttribute("authUser");
 		boardService.updateHit(contentNo);
 		BoardVO content = boardService.getContent(contentNo);
+		int userNo = vo.getUserNo();
+		content.setUserNo(userNo);
 		model.addAttribute("content", content);
 		
 		return "eGovBoard/readContent";
@@ -172,13 +174,37 @@ public class BoardController {
 		return boardService.deleteContent(contentNo);
 	}
 	
-	
-	@PostMapping(value = "/api/list.do")
-	public @ResponseBody List<BoardVO> getReplyList(@RequestBody String contentNo){
+	@ResponseBody 
+	@PostMapping(value = "/api/replylist.do")
+	public List<BoardVO> getReplyList(@RequestBody String contentNo){
 		List<BoardVO> replies = boardService.getReplyList(contentNo);
 		System.out.println("replies : " + replies);
 		return replies;
 	}
+	
+	
+	@ResponseBody
+	@PostMapping(value = "/api/replyAdd.do")
+	public int insertReply(@RequestBody BoardVO vo) {
+		return boardService.insertReply(vo);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/api/replyDelete.do")
+	public int deleteReply(@RequestBody String replyNo) {
+		return boardService.deleteReply(replyNo);
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/api/verifyUser.do")
+	public int verifyUser(@RequestBody BoardVO vo) {
+		BoardVO resultVO = boardService.verifyUser(vo);
+		int result = resultVO.getUserNo();
+		System.out.println("print result : " + result);
+		return result;
+	}
+	
+	
 	/*
 	@ResponseBody
 	@RequestMapping(value = "/edit.do")

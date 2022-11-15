@@ -225,5 +225,19 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		int parseNo = Integer.parseInt(contentNo);
 		return boardDAO.getReplyList(parseNo);
 	}
+	
+	public int insertReply(BoardVO vo) {
+		return boardDAO.insertReply(vo);
+	}
+	
+	public BoardVO verifyUser(BoardVO vo) {
+		return boardDAO.verifyUser(vo);
+	}
+	
+	public int deleteReply(String replyNo) {
+		int parseNo = Integer.parseInt(replyNo);
+		return boardDAO.deleteReply(parseNo);
+	}
+	
 
 }
