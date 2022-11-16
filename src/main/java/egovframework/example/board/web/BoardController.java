@@ -198,8 +198,7 @@ public class BoardController {
 	@ResponseBody
 	@PostMapping(value = "/api/verifyUser.do")
 	public int verifyUser(@RequestBody BoardVO vo) {
-		BoardVO resultVO = boardService.verifyUser(vo);
-		int result = resultVO.getUserNo();
+		int result = boardService.verifyUser(vo);
 		System.out.println("print result : " + result);
 		return result;
 	}

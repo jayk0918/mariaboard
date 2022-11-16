@@ -250,10 +250,10 @@
 	
 	</insert>
 	
-	<select id = "verifyUser" parameterType = "BoardVO" resultType = "BoardVO">
+	<select id = "verifyUser" parameterType = "BoardVO" resultType = "int">
 	
 		SELECT
-			ifnull(user_no, -1)
+			user_no
 		FROM
 			board.reply
 		WHERE

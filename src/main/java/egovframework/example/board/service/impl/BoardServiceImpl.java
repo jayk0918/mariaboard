@@ -230,7 +230,7 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		return boardDAO.insertReply(vo);
 	}
 	
-	public BoardVO verifyUser(BoardVO vo) {
+	public int verifyUser(BoardVO vo) {
 		return boardDAO.verifyUser(vo);
 	}
 	

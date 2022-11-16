@@ -177,43 +177,61 @@ $("#replyArea").on("click", ".btnDelete", function(){
 	
 	console.log(BoardVO);
 	
-	$.ajax({
-		url : "${pageContext.request.contextPath}/api/verifyUser.do",
-		type : "post",
-		data : JSON.stringify(BoardVO),
-		contentType : "application/json",
-		dataType : "json",
-		success : function(result){
-			console.log(result);
-			/*
-			if(result == userNo || userNo == 3){
-				var selectDel = confirm("삭제하시겠습니까?");
-				
-				if(selectDel == true){
-					$.ajax({
-						url : "${pageContext.request.contextPath}/api/replyDelete.do",
-						type : "post",
-						data : JSON.stringify(replyNo),
-						contentType : "application/json",
-						dataType : "json",
-						success : function(){
-							alert("삭제되었습니다.");
-							location.reload();
-						},
-						error : function(XHR, status, error) {
-							console.log(status + ' : ' + error);
-						}
-					});
+	if(userNo == 3){
+		var selectDel = confirm("삭제하시겠습니까?");
+		if(selectDel == true){
+			$.ajax({
+				url : "${pageContext.request.contextPath}/api/replyDelete.do",
+				type : "post",
+				data : JSON.stringify(replyNo),
+				contentType : "application/json",
+				dataType : "json",
+				success : function(){
+					alert("삭제되었습니다.");
+					location.reload();
+				},
+				error : function(XHR, status, error) {
+					console.log(status + ' : ' + error);
 				}
-				
-			}else{
-				alert("권한이 없습니다.");
-			}*/
-		},
-		error : function(XHR, status, error) {
-			console.log(status + ' : ' + error);
+			});
+		}else{
+			alert("취소하였습니다.");
 		}
-	});
+	}else{
+		$.ajax({
+			url : "${pageContext.request.contextPath}/api/verifyUser.do",
+			type : "post",
+			data : JSON.stringify(BoardVO),
+			contentType : "application/json",
+			dataType : "json",
+			success : function(result){
+				console.log(result);
+				var selectDel = confirm("삭제하시겠습니까?");
+					if(selectDel == true){
+						$.ajax({
+							url : "${pageContext.request.contextPath}/api/replyDelete.do",
+							type : "post",
+							data : JSON.stringify(replyNo),
+							contentType : "application/json",
+							dataType : "json",
+							success : function(){
+								alert("삭제되었습니다.");
+								location.reload();
+							},
+							error : function(XHR, status, error) {
+								console.log(status + ' : ' + error);
+							}
+						});
+					}else{
+						alert("취소하였습니다.");
+					}
+			},
+			error : function(XHR, status, error) {
+				alert("권한이 없습니다.");
+			}
+		});
+	}
+
 });
 
 

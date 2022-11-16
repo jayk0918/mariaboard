@@ -104,7 +104,7 @@ public interface BoardService {
 	
 	int insertReply(BoardVO vo);
 	
-	BoardVO verifyUser(BoardVO vo);
+	int verifyUser(BoardVO vo);
 	
 	int deleteReply(String replyNo);
 

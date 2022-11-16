@@ -104,7 +104,7 @@ public interface BoardMapper {
 	
 	int insertReply(BoardVO vo);
 	
-	BoardVO verifyUser(BoardVO vo);
+	int verifyUser(BoardVO vo);
 	
 	int deleteReply(int replyNo);
 	
