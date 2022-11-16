@@ -102,10 +102,6 @@
 
 $(document).ready(function(){
 	fetchList();
-	var authUserNo = ${authUser.userNo};
-	var contentNo = ${content.userNo};
-	console.log(authUserNo);
-	console.log(contentNo);
 });
 
 $("#deletion").on("click",function(){
@@ -166,7 +162,7 @@ $("#replySubmit").on("click",function(){
 $("#replyArea").on("click", ".btnDelete", function(){
 	var $this = $(this);
 	var replyNo = $this.data("no");
-	var userNo = ${content.userNo};
+	var userNo = ${authUser.userNo};
 	
 	var BoardVO = {
 		replyNo : replyNo,
