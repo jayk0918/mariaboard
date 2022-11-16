@@ -203,15 +203,4 @@ public class BoardController {
 		return result;
 	}
 	
-	
-	/*
-	@ResponseBody
-	@RequestMapping(value = "/edit.do")
-	public int updateContent(@RequestBody String vo) throws Exception {
-		System.out.println("print Vo : " + vo);
-		//return boardService.updateContent(vo);
-	}
-	*/
-	
-	
 }

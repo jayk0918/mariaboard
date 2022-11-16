@@ -90,6 +90,14 @@
 
 <script type = "text/javascript">
 
+$("#search").on("submit", function(e){
+	var keyword = $("#searchKeyword").val();
+	if(keyword == ""){
+		alert("내용을 입력해주세요");
+		e.preventDefault();
+	}
+});
+
 function fn_egov_link_page(pageNo){
 	location.href = "<c:url value='/list.do'/>?pageIndex=" + pageNo + "&searchCategory=" + $("#searchedCategory").val() + "&searchKeyword=" + $("#searchedKeyword").val();
 	// "?searchCategory=" + $("#searchCategory").val() + "?searchKeyword=" + $("#searchKeyword").val();

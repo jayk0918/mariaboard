@@ -107,10 +107,7 @@ $(document).ready(function(){
 });
 
 $("#deletion").on("click",function(){
-	console.log("삭제버튼 클릭");
 	var contentNo = ${content.contentNo}
-	console.log(contentNo);
-	
 	var selectDel = confirm("삭제하시겠습니까?");
 	
 	if(selectDel == true){
@@ -165,7 +162,6 @@ $("#replySubmit").on("click",function(){
 });
 
 $("#replyArea").on("click", ".btnDelete", function(){
-	console.log("삭제버튼");
 	var $this = $(this);
 	var replyNo = $this.data("no");
 	var userNo = ${content.userNo};
@@ -174,8 +170,6 @@ $("#replyArea").on("click", ".btnDelete", function(){
 		replyNo : replyNo,
 		userNo : userNo
 	}
-	
-	console.log(BoardVO);
 	
 	if(userNo == 3){
 		var selectDel = confirm("삭제하시겠습니까?");
@@ -205,7 +199,6 @@ $("#replyArea").on("click", ".btnDelete", function(){
 			contentType : "application/json",
 			dataType : "json",
 			success : function(result){
-				console.log(result);
 				var selectDel = confirm("삭제하시겠습니까?");
 					if(selectDel == true){
 						$.ajax({
@@ -245,8 +238,6 @@ function fetchList(){
 		data : JSON.stringify(contentNo),
 		dataType : "json",
 		success : function(boardVOList){
-			console.log(boardVOList);
-			
 			for(var i=0; i<boardVOList.length; i++){
 				render(boardVOList[i], 'down');
 			}
@@ -259,7 +250,6 @@ function fetchList(){
 }
 
 function render(boardVO, opt){
-	console.log('render()');
 	var str = '';
 	
 	str += '<table id="t'+boardVO.replyNo+'" class="replyRead">';
