@@ -25,8 +25,11 @@ public class MainController {
 	@PostMapping(value = "/login.do")
 	public String loginCheck(@ModelAttribute BoardVO bVO, HttpSession session) {
 		
+		// 입력한 id, pw값을 검증
 		BoardVO authUser = boardService.loginCheck(bVO);
-		System.out.println("login : " + authUser);
+		
+		// 검증된 유저면 해당 유저의 고유No를 세션에 authUser라 명명하여 저장
+		// 아닐 경우 로그인 폼으로 회귀
 		if(authUser != null) {
 			session.setAttribute("authUser", authUser);
 			return "redirect:/list.do";
@@ -35,6 +38,7 @@ public class MainController {
 		}
 	}
 	
+	//////// logout시 세션 값 제거 ////////
 	@GetMapping(value = "/logout.do")
 	public String logout(HttpSession session) {
 		session.removeAttribute("authUser");

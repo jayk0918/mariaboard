@@ -29,6 +29,9 @@
 							<p>안녕하세요 ${authUser.userName}님  <a href = "${pageContext.request.contextPath}/logout.do">로그아웃</a></p>
 						</div>
 						<p id = "contentCnt" class = "clearfix">게시물 수 : ${totCnt}</p>
+						
+						<!------------------ 검색 form -------------------->
+						<!-- 제목 / 글쓴이 / 내용 3가지 카테고리로 input의 값 검색 -->
 						<form id = "search" name = "search" method = "get" action = "list.do">
 							<select id = "searchCategory" name = 'searchCategory'>
 								<option value='0'>선택하세요</option>
@@ -39,11 +42,14 @@
 							<input id = "searchKeyword" type= "text" name = "searchKeyword">
 							<button type = "submit" class = "btn">검색</button>
 						</form>
+						
 					</div>
 					<div id="list">
+						<!-- 기존 검색된 파라미터값 저장태그 -->
 						<input id = "searchedCategory" name = "searchedCategory" type = "hidden" value = "${searchVO.searchedCategory}">
 						<input id = "searchedKeyword" name = "searchedKeyword" type = "hidden" value = "${searchVO.searchedKeyword}">
 						
+						<!-- 리스트 table -->
 						<table class = "table-bordered">
 							<thead>
 								<tr>
@@ -66,15 +72,19 @@
 								</c:forEach>
 							</tbody>
 						</table>
+						
 					</div>
 					<!-- //list -->
 					<a id="btn_add" class = "btn" href="${pageContext.request.contextPath}/writeForm.do">등록</a>
+					
+					<!-- 초기화 버튼, 기존 검색 파라미터를 초기화하고 최초 리스트 페이지로 회귀 -->
 					<div id = "initialization">
 						<a class = "btn" href = "${pageContext.request.contextPath}/list.do">초기화</a>
 					</div>
 				</div>
 				<!-- //board -->
 				
+				<!-- 전자정부프레임워크 페이징 -->
 				<div id="paging">
 	        		<ui:pagination paginationInfo = "${paginationInfo}" type="image" jsFunction="fn_egov_link_page" />
 	        		<form:hidden path="pageIndex" />
@@ -90,6 +100,7 @@
 
 <script type = "text/javascript">
 
+/*** 검색 값 없을 시 form 처리 방지, 내용 입력 alert ***/
 $("#search").on("submit", function(e){
 	var keyword = $("#searchKeyword").val();
 	if(keyword == ""){
@@ -98,10 +109,13 @@ $("#search").on("submit", function(e){
 	}
 });
 
+/*** 페이징 숫자******/
+/* resources/egovframework/context-property에서 1개 페이지 출력 게시물 갯수 조정 가능 */
+/* 해당 검색값과 페이지 index값 유지를 위해 검색값 파라미터를 계속 넘겨줌(searchedCategory, searchedKeyword의 존재 이유) */   
 function fn_egov_link_page(pageNo){
 	location.href = "<c:url value='/list.do'/>?pageIndex=" + pageNo + "&searchCategory=" + $("#searchedCategory").val() + "&searchKeyword=" + $("#searchedKeyword").val();
-	// "?searchCategory=" + $("#searchCategory").val() + "?searchKeyword=" + $("#searchKeyword").val();
 }
+
 </script>
 
 </html>

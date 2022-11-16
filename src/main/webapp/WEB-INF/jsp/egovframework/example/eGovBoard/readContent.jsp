@@ -49,7 +49,6 @@
 						<div class="form-group">
 							<span class="form-text">제 목</span>
 							<span id = "originalTitle" class="form-value">${content.title}</span>
-							<!-- <input type = "hidden" id = "editTitle">-->
 						</div>
 					
 						<!-- 내용 -->
@@ -57,7 +56,6 @@
 							<span id = "originalContent" class="form-value" >
 								${content.content}
 							</span>
-							<!--<input type = "hidden" id = "editContent">-->
 						</div>
 						
 						<c:if test = "${content.saveName != null}">
@@ -104,6 +102,10 @@
 
 $(document).ready(function(){
 	fetchList();
+	var authUserNo = ${authUser.userNo};
+	var contentNo = ${content.userNo};
+	console.log(authUserNo);
+	console.log(contentNo);
 });
 
 $("#deletion").on("click",function(){

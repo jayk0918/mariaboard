@@ -29,23 +29,27 @@ public class BoardController {
 	@Resource(name = "boardService")
 	private BoardService boardService;
 	
-	/** EgovPropertyService */
+	/** EgovPropertyService(페이징) */
 	@Resource(name = "propertiesService")
 	protected EgovPropertyService propertiesService;
 	
+	// 게시글 리스트 호출
 	@RequestMapping(value = "/list.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public String getList(Model model, HttpSession session, @ModelAttribute BoardVO vo) throws Exception{
 		
+		//////////// 로그인 신원 확인용 세션값 호출 ////////////
 		BoardVO authUser = (BoardVO) session.getAttribute("authUser");
 		
+		//////////// 검색 business logic ////////////
+		// 새로운 BoardVO 객체를 선언하여 해당 객체에 검색되었던 카테고리 및 키워드를 저장함 //
 		BoardVO searchVO = new BoardVO();
 		int beforeCategory = vo.getSearchCategory();
 		String beforeKeyword = vo.getSearchKeyword();
 		
 		searchVO.setSearchedCategory(beforeCategory);
 		searchVO.setSearchedKeyword(beforeKeyword);
-		searchVO.setSearchStatus(1);
-
+		
+		// 검색되었던 카테고리와 키워드를 검증하여 기존에 검색되었떤 값이 존재한다면 검색 키워드로 재설정 (페이징 시 검색값 유지) //
 		int categoryCheck = searchVO.getSearchedCategory();
 		String keywordCheck = searchVO.getSearchedKeyword();
 		
@@ -54,8 +58,7 @@ public class BoardController {
 			vo.setSearchKeyword(keywordCheck);
 		}
 		
-		
-		// 전자정부 프레임워크 제공 페이징 ///////////////////////////////////
+		//////////// 전자정부 프레임워크 제공 페이징 라이브러리 ////////////
 		/******* Pagination *******/
 		/** EgovPropertyService.sample **/
 		vo.setPageUnit(propertiesService.getInt("pageUnit"));
@@ -75,11 +78,10 @@ public class BoardController {
 		paginationInfo.setTotalRecordCount(totCnt);
 		////////////////////////////////////////////////////////////
 		
-		
+		// 검색 및 페이징 관련한 일련의 설정이 끝난 후 전체 리스트 또는 조건에 맞는 리스트를 호출함 //
 		List<BoardVO> list = boardService.selectBoardList(vo);
 		
-		System.out.println("list : " + list);
-		
+		// model에 jsp태그에 필요한 데이터를 저장함 //
 		model.addAttribute("list", list);
 		model.addAttribute("authUser", authUser);
 		model.addAttribute("totCnt", totCnt);
@@ -89,16 +91,13 @@ public class BoardController {
 		return "eGovBoard/list";
 	}
 	
+	// 게시글 등록 폼 호출
 	@GetMapping(value = "/writeForm.do")
-	public String getWriteForm(Model model, HttpSession session) {
-		
-		BoardVO vo = (BoardVO) session.getAttribute("authUser");
-		int userNo = vo.getUserNo();
-		model.addAttribute("userNo", userNo);
-		
+	public String getWriteForm() {
 		return "eGovBoard/writeForm";
 	}
 	
+	// 게시글 등록
 	@PostMapping(value = "/write.do")
 	public String writeContent(@ModelAttribute BoardVO bVO,
 								HttpSession session,
@@ -121,9 +120,8 @@ public class BoardController {
 		BoardVO vo = (BoardVO) session.getAttribute("authUser");
 		boardService.updateHit(contentNo);
 		BoardVO content = boardService.getContent(contentNo);
-		int userNo = vo.getUserNo();
-		content.setUserNo(userNo);
 		model.addAttribute("content", content);
+		model.addAttribute("authUser", vo);
 		
 		return "eGovBoard/readContent";
 	}

@@ -18,8 +18,12 @@
 	<h1>Board Project</h1>
 	<div id="center-content">
 		<div id="loginForm">
+			<!-- 유저 3명
+				id : guest1, pw : 11
+				id : guest2, pw : 22
+				id : admin, pw : 123
+			 -->
 			<form method="post" action="${pageContext.request.contextPath}/login.do">
-				
 				<div id = "idInput">
 		      		<label for="userId">아이디</label></td>
 			      	<input id="userId" type="text" name="userId" placeholder = "아이디를 입력해주세요"></td>
@@ -28,15 +32,6 @@
 	      			<label for = "password">패스워드</label>
 	      			<input id = "password" type="password" name="password">
       			</div>
-	      		<!--
-	      		<c:if test = "${param.result == 'fail'}">
-		      		<tr>
-		      			<td colspan="2" id="tdMsg" colspan="2">
-	      					<span>아이디 또는 비밀번호를 확인해 주세요.</span>
-		      			</td>
-		      		</tr> 
-	      		</c:if>
-	      		 -->
 	      		<div id="btnArea">
 					<button id = "btn-login" class="btn btn-primary" type="submit">로그인</button>
 				</div>

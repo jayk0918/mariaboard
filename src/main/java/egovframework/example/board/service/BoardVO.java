@@ -1,17 +1,21 @@
 package egovframework.example.board.service;
 
 import egovframework.example.sample.service.SampleDefaultVO;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor // 기본생성자
+@ToString(callSuper = false)
 @EqualsAndHashCode(callSuper = false)
 public class BoardVO extends SampleDefaultVO {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	
+	private static final long serialVersionUID = 1L;
+
 	// 로그인 id, password
 	private String userId;
 	private String password;
@@ -25,12 +29,14 @@ public class BoardVO extends SampleDefaultVO {
 	private String date;
 	private int hit;
 	
-	// 검색 조건
+	////// 검색 조건 //////
+	// 검색 시 파라미터
 	private String searchKeyword;
 	private int searchCategory;
+	
+	// 페이징 시 검색값 유지를 위한 파라미터
 	private String searchedKeyword;
 	private int searchedCategory;
-	private int searchStatus;
 	
 	// 첨부파일
 	private int filesNo;
@@ -42,7 +48,5 @@ public class BoardVO extends SampleDefaultVO {
 	// 댓글
 	private String reply;
 	private int replyNo;
-
-	public BoardVO() {}
 	
 }
