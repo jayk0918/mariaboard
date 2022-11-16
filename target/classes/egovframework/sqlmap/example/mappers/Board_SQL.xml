@@ -9,7 +9,8 @@
 		<result property="userName" column="user_name"/>
 		<result property="contentNo" column="content_no"/>
 	</resultMap>
-
+	
+	<!-- 게시글 등록(generateKeys 사용) -->
 	<insert id="insertContent" useGeneratedKeys = "true" keyProperty = "contentNo" parameterType="BoardVO">
 
 		INSERT INTO
@@ -22,6 +23,7 @@
 		
 	</insert>
 	
+	<!-- 첨부파일 등록 -->
 	<insert id = "fileInsert" parameterType = "BoardVO">
 		INSERT INTO
 			BOARD.FILES
@@ -33,7 +35,8 @@
 			,FILES_FILE_SIZE = #{fileSize}
 	
 	</insert>
-
+	
+	<!-- 게시글 수정 -->
 	<update id="updateContent" parameterType = "BoardVO">
 
 		UPDATE
@@ -47,6 +50,7 @@
 
 	</update>
 	
+	<!-- 첨부파일 수정 -->
 	<update id="updateFile" parameterType = "BoardVO">
 
 		UPDATE
@@ -60,7 +64,8 @@
 			FILES_NO = #{filesNo}
 
 	</update>
-
+	
+	<!-- 게시글 삭제 -->
 	<delete id="deleteContent" parameterType = "int">
 
 		DELETE FROM
@@ -70,6 +75,7 @@
 
 	</delete>
 	
+	<!-- 첨부파일 삭제(전체 삭제) -->
 	<delete id="deleteFile" parameterType = "int">
 
 		DELETE FROM
@@ -79,6 +85,7 @@
 
 	</delete>
 	
+	<!-- 청부파일 삭제(복수의 첨부파일이 존재할 경우) -->
 	<delete id = "removeFile" parameterType = "int">
 		DELETE FROM
 			BOARD.FILES
@@ -86,29 +93,7 @@
 			FILES_NO = #{filesNo}
 	</delete>
 	
-	<!--  
-	<select id="selectBoardList" resultType = "BoardVO">
-
-		SELECT
-			 CT.CONTENT_NO AS 'contentNo'
-			,CT.CONTENT_TITLE AS 'title'
-			,CT.CONTENT_CONTENT AS 'content'
-			,CT.CONTENT_HIT AS 'hit'
-			,DATE_FORMAT(CONTENT_REGDATE, '%x-%c-%d') AS 'date'
-			,US.USER_NAME AS 'userName'
-			,US.SEQ_USER_NO AS 'userNo'
-		FROM
-			BOARD.CONTENTS CT
-		INNER JOIN
-			BOARD.USERS US
-		ON
-			CT.CONTENT_USER_NO = US.SEQ_USER_NO
-		ORDER BY
-			contentNo DESC
-
-	</select>
-	-->
-	
+	<!-- 유저 확인 -->	
 	<select id = "loginCheck" parameterType = "BoardVO" resultType = "BoardVO">
 		
 		SELECT
@@ -123,7 +108,7 @@
 	
 	</select>
 	
-	
+	<!-- 조회수 증가 -->
 	<update id="updateHit" parameterType = "int">
 
 		UPDATE
@@ -135,6 +120,7 @@
 
 	</update>
 	
+	<!-- 게시글(1걔) 상세정보 호출 -->
 	<select id = "getContent" parameterType = "int" resultType = "BoardVO">
 	
 		SELECT
@@ -162,6 +148,7 @@
 	
 	</select>
 	
+	<!-- 게시글 조회(검색조건 포함) -->
 	<select id="selectBoardList" parameterType="BoardVO" resultType = "BoardVO">
 
 		SELECT
@@ -196,7 +183,7 @@
 			
 	</select>
 	
-	
+	<!-- 전체 게시글 갯수 조회 -->
 	<select id="selectBoardListTotCnt" parameterType="BoardVO" resultType="int">
 
 		SELECT
@@ -220,6 +207,7 @@
 		
 	</select>
 	
+	<!-- 해당 게시글 전체 댓글 조회 -->
 	<select id = "getReplyList" parameterType = "int" resultType = "BoardVO">
 	
 		SELECT RP.REPLY_NO AS 'replyNo'
@@ -239,6 +227,7 @@
 	
 	</select>
 	
+	<!-- 댓글 등록 -->
 	<insert id = "insertReply" parameterType = "BoardVO">
 		
 		INSERT INTO
@@ -250,6 +239,7 @@
 	
 	</insert>
 	
+	<!-- 댓글 삭제 시 권한 조회 -->
 	<select id = "verifyUser" parameterType = "BoardVO" resultType = "int">
 	
 		SELECT
@@ -263,6 +253,7 @@
 	
 	</select>
 	
+	<!-- 댓글 삭제 -->
 	<delete id = "deleteReply" parameterType = "int">
 		DELETE from
 			board.reply

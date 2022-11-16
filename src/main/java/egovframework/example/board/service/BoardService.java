@@ -92,7 +92,7 @@ public interface BoardService {
 	
 	BoardVO getContent(int contentNo);
 	
-	String fileSave(BoardVO vo, MultipartFile file);
+	int fileSave(BoardVO vo, MultipartFile file);
 	
 	int deleteFile(String contentNo) throws Exception;
 	

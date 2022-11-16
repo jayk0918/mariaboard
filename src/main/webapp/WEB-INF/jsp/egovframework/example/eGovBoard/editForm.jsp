@@ -43,6 +43,8 @@
 							<c:choose>
 								<c:when test = "${content.saveName == null}">
 									<input id="file" type="file" name="file">
+									
+									<!-- 첨부파일 존재여부 구분 태그 -->
 									<input id = "editIdentify" name = "editIdentify" type = "hidden" value = "-1">
 								</c:when>
 								<c:otherwise>
@@ -50,6 +52,8 @@
 									<button id = "cancelEdit"  type = "button">취소</button>
 									<input id = "file" type = "hidden" name = "file">
 									<span id = "orgFile">${content.saveName}</span>
+									
+									<!-- 첨부파일 존재여부 구분 태그 -->
 									<input id = "editIdentify" name = "editIdentify" type = "hidden" value = "0">
 								</c:otherwise>
 							</c:choose>
@@ -70,10 +74,14 @@
 </body>
 
 <script type = "text/javascript">
+
+/*** 수정화면 호출 시 수정 취소 버튼을 숨김 ***/ 
 $(document).ready(function(){
 	$("#cancelEdit").hide();
 });
 
+/*** 수정 버튼을 누르면 input file태그가 보여지고 수정 버튼은 숨김 ***/
+/*** 이때, 첨부파일 판별용 코드인 editIdentify의 값을 1로 설정하여 update예정인 파일이 있음을 의사표시 ***/
 $("#editFile").on("click", function(){
 	$("#file").prop("type","file");
 	$("#editFile").hide();
@@ -82,6 +90,8 @@ $("#editFile").on("click", function(){
 	$("#editIdentify").val(1);
 });
 
+/*** 수정 취소 버튼을 누를 경우 기존의 파일명이 다시 보이고 input file태그를 hidden 처리 ***/
+/*** 수정 버튼을 눌렀을 당시 1로 변경된 editIdentify의 값을 0으로 회귀시켜 수정할 첨부파일이 없음을 의사표시 ***/
 $("#cancelEdit").on("click",function(){
 	$("#file").prop("type","hidden");
 	$("#editFile").show();

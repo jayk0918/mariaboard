@@ -100,10 +100,12 @@
 
 <script type = "text/javascript">
 
+/*** 게시글 상세 화면을 호출하면서 동시에 해당 게시글의 댓글 리스트를 render함 ***/
 $(document).ready(function(){
 	fetchList();
 });
 
+/*** 게시글 삭제는 ajax로 구현하여 삭제 전 확인 절차를 수행함 ***/
 $("#deletion").on("click",function(){
 	var contentNo = ${content.contentNo}
 	var selectDel = confirm("삭제하시겠습니까?");
@@ -116,7 +118,7 @@ $("#deletion").on("click",function(){
 			contentType : "application/json",
 			dataType : "json",
 			success : function(){
-				alert("삭제 성공");
+				alert("삭제되었습니다");
 				window.location.href = "${pageContext.request.contextPath}/list.do";
 			},
 			error : function(XHR, status, error) {
@@ -128,6 +130,7 @@ $("#deletion").on("click",function(){
 	}
 });
 
+/****** 댓글 등록 logic ******/
 $("#replySubmit").on("click",function(){
 	var contentNo = ${content.contentNo};
 	var userNo = ${content.userNo};
@@ -139,6 +142,7 @@ $("#replySubmit").on("click",function(){
 		userNo : userNo
 	}
 	
+	/*** 댓글의 길이가 0(내용없음) 일때는 alert로 알리고 등록하지 않음 ***/
 	if(reply.length == 0){
 		alert("내용을 입력해주세요");
 	}else{
@@ -159,6 +163,7 @@ $("#replySubmit").on("click",function(){
 	}
 });
 
+/******* 댓글 삭제 버튼 클릭 이벤트 및 logic *******/
 $("#replyArea").on("click", ".btnDelete", function(){
 	var $this = $(this);
 	var replyNo = $this.data("no");
@@ -169,6 +174,7 @@ $("#replyArea").on("click", ".btnDelete", function(){
 		userNo : userNo
 	}
 	
+	/*** userNo = 3은 관리자, 관리자일 경우 삭제 권한 있음 (관리자 여부 선 판별) ***/
 	if(userNo == 3){
 		var selectDel = confirm("삭제하시겠습니까?");
 		if(selectDel == true){
@@ -190,13 +196,16 @@ $("#replyArea").on("click", ".btnDelete", function(){
 			alert("취소하였습니다.");
 		}
 	}else{
+		/*** 관리자가 아닐 경우 ajax로 해당 유저의 댓글인지 판별하고, 맞을 경우 삭제 여부를 선택 ***/
 		$.ajax({
 			url : "${pageContext.request.contextPath}/api/verifyUser.do",
 			type : "post",
 			data : JSON.stringify(BoardVO),
 			contentType : "application/json",
 			dataType : "json",
-			success : function(result){
+			success : function(){
+				
+				/**** 삭제 전 확인 ****/
 				var selectDel = confirm("삭제하시겠습니까?");
 					if(selectDel == true){
 						$.ajax({
@@ -217,6 +226,8 @@ $("#replyArea").on("click", ".btnDelete", function(){
 						alert("취소하였습니다.");
 					}
 			},
+			
+			/*** 권한이 없는 유저가 삭제를 시도할 경우 발생하는 에러 상황을 alert를 통해 권한 없음을 알림 ***/
 			error : function(XHR, status, error) {
 				alert("권한이 없습니다.");
 			}
@@ -225,7 +236,7 @@ $("#replyArea").on("click", ".btnDelete", function(){
 
 });
 
-
+/**** 페이지 접속 시 댓글 리스트 출력 함수 ****/
 function fetchList(){
 	var contentNo = ${content.contentNo};
 	
@@ -247,6 +258,7 @@ function fetchList(){
 	});
 }
 
+/******** 댓글 render ********/
 function render(boardVO, opt){
 	var str = '';
 	

@@ -151,15 +151,19 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		return boardDAO.getContent(contentNo);
 	}
 	
-	public String fileSave(BoardVO vo, MultipartFile file) {
+	// 첨부파일 저장 logic
+	public int fileSave(BoardVO vo, MultipartFile file) {
+		// uuid와 currentTime을 이용하여 본 파일명을 대체하여 저장
+		// 파일 저장 위치는 local로 지정
 		String saveDir = "C:\\Users\\jespe\\Downloads\\boardfiles\\";
 		String orgName = file.getOriginalFilename();
 		String exName = orgName.substring(orgName.lastIndexOf("."));
 		String saveName = System.currentTimeMillis() + UUID.randomUUID().toString() + exName;
-		
 		String filePath = saveDir + saveName;
 		long fileSize = file.getSize();
 		
+		// bVO라는 새로운 객체를 생성
+		// vo로부터 content의 PK값이자 generateKey(오라클 selectKey)
 		BoardVO bVO = new BoardVO();
 		int boardNo = vo.getContentNo();
 		bVO.setOrgName(orgName);
@@ -168,6 +172,7 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		bVO.setFileSize(fileSize);
 		bVO.setContentNo(boardNo);
 		
+		// 파일 저장
 		try {
 			byte[] fileData = file.getBytes();
 			OutputStream os = new FileOutputStream(filePath);
@@ -179,11 +184,10 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 			e.printStackTrace();
 		}
 		
-		boardDAO.fileInsert(bVO);
-		
-		return saveName;
+		return boardDAO.fileInsert(bVO);
 	}
 	
+	// 첨부파일 수정 logic (logic은 저장과 동일, 쿼리문만 update문)
 	public int updateFile(BoardVO vo, MultipartFile file) {
 		String saveDir = "C:\\Users\\jespe\\Downloads\\boardfiles\\";
 		String orgName = file.getOriginalFilename();
@@ -238,6 +242,5 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 		int parseNo = Integer.parseInt(replyNo);
 		return boardDAO.deleteReply(parseNo);
 	}
-	
 
 }

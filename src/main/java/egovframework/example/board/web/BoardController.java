@@ -76,7 +76,7 @@ public class BoardController {
 
 		int totCnt = boardService.selectBoardListTotCnt(vo);
 		paginationInfo.setTotalRecordCount(totCnt);
-		////////////////////////////////////////////////////////////
+		////////////////////////////////////////////////////////
 		
 		// 검색 및 페이징 관련한 일련의 설정이 끝난 후 전체 리스트 또는 조건에 맞는 리스트를 호출함 //
 		List<BoardVO> list = boardService.selectBoardList(vo);
@@ -103,11 +103,14 @@ public class BoardController {
 								HttpSession session,
 								@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
 		
+		// 세션에 저장된 사용자의 No를 set하여 게시글을 저장
 		BoardVO vo = (BoardVO) session.getAttribute("authUser");
 		int userNo = vo.getUserNo();
 		bVO.setUserNo(userNo);
 		boardService.insertContent(bVO);
 		
+		// 첨부파일의 경우 게시글 테이블에서 외래키를 주는 방식으로 설계하였음
+		// 첨부파일이 null일 경우 해당 로직은 pass, 있을 경우 함께 등록함
 		if(file.isEmpty() != true) {
 			boardService.fileSave(bVO, file);
 		}
@@ -115,10 +118,15 @@ public class BoardController {
 		return "redirect:/list.do";
 	}
 	
+	// 게시글 상세 조회
 	@GetMapping(value = "/readContent.do")
 	public String readContent(HttpSession session, @RequestParam int contentNo, Model model) throws Exception {
 		BoardVO vo = (BoardVO) session.getAttribute("authUser");
+		
+		// 조회수 +1
 		boardService.updateHit(contentNo);
+		
+		// 파라미터 contentNo에 맞는 게시글 조회 후 model에 저장
 		BoardVO content = boardService.getContent(contentNo);
 		model.addAttribute("content", content);
 		model.addAttribute("authUser", vo);
@@ -126,9 +134,11 @@ public class BoardController {
 		return "eGovBoard/readContent";
 	}
 	
+	// 게시글 수정 폼 호출
 	@GetMapping(value = "/editForm.do")
 	public String getEditForm(@RequestParam int contentNo, Model model) throws IOException {
 		
+		// 기존에 작성된 내용도 조회하여 model에 저장
 		BoardVO content = boardService.getContent(contentNo);
 		model.addAttribute("content", content);
 		
@@ -140,16 +150,31 @@ public class BoardController {
 							  @RequestParam(value = "file", required = false) MultipartFile file,
 							  @RequestParam(value = "editIdentify", required = false) int identify) throws Exception {
 		
+		/*
+		 사용자의 선택에 따라 파일을 유지 / 수정 / 삭제 가능함
+		 
+		 editIdentify(jsp요소명) & identify 역할 : 수정 데이터에서 첨부파일이 있는지의 여부를 판별하기 위한 파라미터
+		 
+		 identify 값
+		 	-1, 1 : 새로운 파일 업로드를 대비하여 input file 태그를 제공, update 시 파일 업데이트 진행 (수정 or 삭제)
+		 			사용자가 '수정'버튼을 누른 상태에서 수정을 진행하면 기존 파일은 삭제됨
+			 0 : 수정할 첨부파일이 없는 상태.
+			 	 0인 상태에서 사용자가 별도의 파일 수정을 진행하지 않으면 기존 파일은 유지됨(null처리)
+		*/ 
+		
 		if(identify == 0) {
 			boardService.updateContent(vo);	
 		}else {
 			boardService.updateContent(vo);
 			
+			// 파일 존재 여부 체크
+			// fileExist 변수로 기존 첨부파일 존재 여부를 판별하여 없을 경우 null로 처리
 			String fileExist = vo.getSaveName();
 			if(fileExist.equals("")) {
 				fileExist = null;
 			}
 			
+			// 기존 첨부파일이 존재 할 경우, update를 진행하기 전에 update를 할 file의 존재 여부를 isEmpty()로 판별
 			if(fileExist != null) {
 				if(file.isEmpty() != true) {
 					boardService.updateFile(vo, file);
@@ -166,6 +191,7 @@ public class BoardController {
 		return "redirect:/list.do";
 	}
 	
+	// ajax 게시글 삭제
 	@ResponseBody
 	@PostMapping(value = "/api/delete.do")
 	public int deleteContent(@RequestBody String contentNo) throws Exception {
@@ -173,33 +199,32 @@ public class BoardController {
 		return boardService.deleteContent(contentNo);
 	}
 	
+	// ajax 댓글 리스트 호출
 	@ResponseBody 
 	@PostMapping(value = "/api/replylist.do")
 	public List<BoardVO> getReplyList(@RequestBody String contentNo){
-		List<BoardVO> replies = boardService.getReplyList(contentNo);
-		System.out.println("replies : " + replies);
-		return replies;
+		return boardService.getReplyList(contentNo);
 	}
 	
-	
+	// ajax 댓글 추가
 	@ResponseBody
 	@PostMapping(value = "/api/replyAdd.do")
 	public int insertReply(@RequestBody BoardVO vo) {
 		return boardService.insertReply(vo);
 	}
 	
+	// ajax 댓글 삭제
 	@ResponseBody
 	@PostMapping(value = "/api/replyDelete.do")
 	public int deleteReply(@RequestBody String replyNo) {
 		return boardService.deleteReply(replyNo);
 	}
 	
+	// ajax 댓글 삭제 권한 조회
 	@ResponseBody
 	@PostMapping(value = "/api/verifyUser.do")
 	public int verifyUser(@RequestBody BoardVO vo) {
-		int result = boardService.verifyUser(vo);
-		System.out.println("print result : " + result);
-		return result;
+		return boardService.verifyUser(vo);
 	}
 	
 }
