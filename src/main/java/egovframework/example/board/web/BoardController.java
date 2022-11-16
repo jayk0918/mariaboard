@@ -45,10 +45,7 @@ public class BoardController {
 		searchVO.setSearchedCategory(beforeCategory);
 		searchVO.setSearchedKeyword(beforeKeyword);
 		searchVO.setSearchStatus(1);
-		
-		System.out.println("beforeCategory : " + beforeCategory);
-		System.out.println("beforeKeyword : " + beforeKeyword);
-		
+
 		int categoryCheck = searchVO.getSearchedCategory();
 		String keywordCheck = searchVO.getSearchedKeyword();
 		
@@ -57,6 +54,8 @@ public class BoardController {
 			vo.setSearchKeyword(keywordCheck);
 		}
 		
+		
+		// 전자정부 프레임워크 제공 페이징 ///////////////////////////////////
 		/******* Pagination *******/
 		/** EgovPropertyService.sample **/
 		vo.setPageUnit(propertiesService.getInt("pageUnit"));
@@ -74,6 +73,8 @@ public class BoardController {
 
 		int totCnt = boardService.selectBoardListTotCnt(vo);
 		paginationInfo.setTotalRecordCount(totCnt);
+		////////////////////////////////////////////////////////////
+		
 		
 		List<BoardVO> list = boardService.selectBoardList(vo);
 		

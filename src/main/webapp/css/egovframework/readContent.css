@@ -66,7 +66,25 @@ input::placeholder{
 }
 
 #replyList{
-	margin-top : 20px;
+	margin-top : 50px;
+}
+
+#replyList > table{
+	width : 900px;
+	font-size : 12px;
+}
+
+#replyList > table > tbody > tr > td:last-of-type{
+	text-align : right;
+}
+
+#replyList > table > tbody > tr > td > button{
+	width: 40px;
+	height : 25px;
+	background-color : #f2114c;
+	color : white;
+	border : 1px solid #000000;
+	border-radius : 5px;
 }
 
 .replyRead{
