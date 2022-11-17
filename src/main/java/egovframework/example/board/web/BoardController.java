@@ -145,6 +145,7 @@ public class BoardController {
 		return "eGovBoard/editForm";
 	}
 	
+	// 게시글 수정
 	@PostMapping(value = "/edit.do")
 	public String editContent(@ModelAttribute BoardVO vo,
 							  @RequestParam(value = "file", required = false) MultipartFile file,
