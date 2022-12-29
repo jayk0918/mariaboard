@@ -135,6 +135,10 @@ public class BoardController {
 		
 		// 파라미터 contentNo에 맞는 게시글 조회 후 model에 저장
 		BoardVO content = boardService.getContent(contentNo);
+		
+		String newLine = content.getContent().replace("\r\n", "<br>");
+		content.setContent(newLine);
+		
 		model.addAttribute("content", content);
 		model.addAttribute("authUser", vo);
 		
@@ -147,6 +151,7 @@ public class BoardController {
 		
 		// 기존에 작성된 내용도 조회하여 model에 저장
 		BoardVO content = boardService.getContent(contentNo);
+
 		model.addAttribute("content", content);
 		
 		return "eGovBoard/editForm";
@@ -154,7 +159,7 @@ public class BoardController {
 	
 	// 파일 다운로드
 	@RequestMapping(value = "/fileDownload.do")
-	public void fileDownload(@RequestParam String saveName, HttpServletRequest request ,HttpServletResponse response) {
+	public void fileDownload(@RequestParam String saveName, HttpServletRequest request, HttpServletResponse response) {
 		
         String realFilename="";
          
@@ -186,7 +191,7 @@ public class BoardController {
             FileInputStream fis = new FileInputStream(realFilename);
  
             int ncount = 0;
-            byte[] bytes = new byte[512];
+            byte[] bytes = new byte[1024];
  
             while ((ncount = fis.read(bytes)) != -1 ) {
                 os.write(bytes, 0, ncount);
