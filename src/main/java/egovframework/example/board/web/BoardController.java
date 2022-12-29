@@ -1,9 +1,16 @@
 package egovframework.example.board.web;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.egovframe.rte.fdl.property.EgovPropertyService;
@@ -143,6 +150,52 @@ public class BoardController {
 		model.addAttribute("content", content);
 		
 		return "eGovBoard/editForm";
+	}
+	
+	// 파일 다운로드
+	@RequestMapping(value = "/fileDownload.do")
+	public void fileDownload(@RequestParam String saveName, HttpServletRequest request ,HttpServletResponse response) {
+		
+        String realFilename="";
+         
+        try {
+            String browser = request.getHeader("User-Agent"); 
+            //파일 인코딩 
+            if (browser.contains("MSIE") || browser.contains("Trident")
+                    || browser.contains("Chrome")) {
+            	saveName = URLEncoder.encode(saveName, "UTF-8").replaceAll("\\+",
+                        "%20");
+            } else {
+            	saveName = new String(saveName.getBytes("UTF-8"), "ISO-8859-1");
+            }
+        } catch (UnsupportedEncodingException ex) {
+            System.out.println("UnsupportedEncodingException");
+        }
+        realFilename = "C:\\Users\\jespe\\Downloads\\boardfiles\\" + saveName;
+        File file1 = new File(realFilename);
+        if (!file1.exists()) {
+            return ;
+        }
+		
+		// 파일명 지정        
+        response.setContentType("application/octer-stream");
+        response.setHeader("Content-Transfer-Encoding", "binary;");
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + saveName + "\"");
+        try {
+            OutputStream os = response.getOutputStream();
+            FileInputStream fis = new FileInputStream(realFilename);
+ 
+            int ncount = 0;
+            byte[] bytes = new byte[512];
+ 
+            while ((ncount = fis.read(bytes)) != -1 ) {
+                os.write(bytes, 0, ncount);
+            }
+            fis.close();
+            os.close();
+        } catch (Exception e) {
+            System.out.println("FileNotFoundException : " + e);
+        }
 	}
 	
 	// 게시글 수정

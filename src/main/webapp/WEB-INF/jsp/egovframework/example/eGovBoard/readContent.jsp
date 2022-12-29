@@ -62,6 +62,9 @@
 							<div class="imgView" >
 								<img class="imgItem" src = "${pageContext.request.contextPath}/upload/${content.saveName}">
 							</div>
+							<div class="downloadFile">
+								<a href = "/fileDownload.do?saveName=${content.saveName}">${content.saveName}</a>
+							</div>
 						</c:if>
 						
 						<br>

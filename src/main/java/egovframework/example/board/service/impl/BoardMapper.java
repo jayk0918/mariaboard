@@ -37,7 +37,7 @@ import egovframework.example.board.service.BoardVO;
  * </pre>
  */
 @Mapper("boardMapper")
-public interface BoardMapper {
+public interface BoardMapper{
 
 	/**
 	 * 글을 등록한다.
