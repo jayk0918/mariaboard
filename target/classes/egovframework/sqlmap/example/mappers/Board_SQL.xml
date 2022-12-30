@@ -120,7 +120,7 @@
 
 	</update>
 	
-	<!-- 게시글(1걔) 상세정보 호출 -->
+	<!-- 게시글(1개) 상세정보 호출 -->
 	<select id = "getContent" parameterType = "int" resultType = "BoardVO">
 	
 		SELECT
@@ -145,6 +145,31 @@
 			CT.CONTENT_NO = FI.FILES_BOARD_NO
 		WHERE
 			CT.CONTENT_NO = #{contentNo}
+	
+	</select>
+	
+	<!-- 상세페이지 내 이전 / 다음 글 조회 -->
+	<select id = "prePage" parameterType = "int" resultType = "int">
+		
+		SELECT
+			IFNULL(MIN(content_no), -1) AS contentNo
+		FROM
+			board.contents
+		WHERE
+			content_no > #{content_no}
+			
+	</select>
+	
+	<select id = "nextPage" parameterType = "int" resultType = "int">
+	
+	<![CDATA[
+		SELECT
+			IFNULL(MAX(content_no), -1) AS contentNo
+		FROM
+			board.contents
+		WHERE
+			content_no < #{content_no}
+	]]>
 	
 	</select>
 	

@@ -45,6 +45,10 @@ public class BoardVO extends SampleDefaultVO {
 	private String filePath;
 	private long fileSize;
 	
+	// 이전, 다음글
+	private int prePage;
+	private int nextPage;
+	
 	// 댓글
 	private String reply;
 	private int replyNo;

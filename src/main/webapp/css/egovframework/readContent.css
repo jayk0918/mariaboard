@@ -9,7 +9,7 @@
 }
 
 .btn{
-	float : right;
+	float: right;
 	border : 1px solid #000000;
 	margin-left : 10px;
 	font-size : 14px;
@@ -49,6 +49,20 @@
 
 #buttons{
 	margin-top : 50px;
+}
+
+#paging > a:first-of-type{
+	float : left;
+	background-color : sliver;
+}
+
+#paging > a:last-of-type{
+	float : left;
+	background-color : lime;
+}
+
+#config > a{
+	float : right;
 }
 
 #reply{

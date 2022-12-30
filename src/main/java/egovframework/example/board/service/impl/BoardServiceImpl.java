@@ -148,7 +148,16 @@ public class BoardServiceImpl extends EgovAbstractServiceImpl implements BoardSe
 	}
 	
 	public BoardVO getContent(int contentNo) {
-		return boardDAO.getContent(contentNo);
+		
+		int prePage = boardDAO.prePage(contentNo);
+		int nextPage = boardDAO.nextPage(contentNo);
+		
+		BoardVO content = boardDAO.getContent(contentNo);
+		
+		content.setPrePage(prePage);
+		content.setNextPage(nextPage);
+		
+		return content;
 	}
 	
 	// 첨부파일 저장 logic

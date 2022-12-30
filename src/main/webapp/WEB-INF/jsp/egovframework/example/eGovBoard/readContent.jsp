@@ -60,9 +60,11 @@
 						</div>
 						
 						<c:if test = "${content.saveName != null}">
-							<div class="imgView" >
-								<img class="imgItem" src = "${pageContext.request.contextPath}/upload/${content.saveName}">
-							</div>
+							<c:if test = "${extension eq '.jpg' || extension eq '.jpeg' || extension eq '.png' || extension eq '.gif'}">
+								<div class="imgView" >
+									<img class="imgItem" src = "${pageContext.request.contextPath}/upload/${content.saveName}">
+								</div>
+							</c:if>
 							<div class="downloadFile">
 								<a href = "/fileDownload.do?saveName=${content.saveName}">${content.saveName}</a>
 							</div>
@@ -78,15 +80,21 @@
 						</div>
 						
 						<div id = "buttons">
-							<a id = "returnList" class = "btn" href="${pageContext.request.contextPath}/list.do" >목록</a>
-							
-							<c:if test = "${authUser.userNo == content.userNo}">
-								<a id = "edit" href = "${pageContext.request.contextPath}/editForm.do?contentNo=${content.contentNo}" class = "btn">수정</a>
-							</c:if>
-							
-							<c:if test="${authUser.userNo == 3 || authUser.userNo == content.userNo}">
-								<button id = "deletion" class = "btn">삭제</td>
-							</c:if>
+							<div id = "paging">
+								<a id = "prePage" href = "${pageContext.request.contextPath}/readContent.do?contentNo=${content.prePage}" class = "btn">이전</a>
+								<a id = "nextPage" href = "${pageContext.request.contextPath}/readContent.do?contentNo=${content.nextPage}" class = "btn">다음</a>
+							</div>
+							<div id = "config">
+								<a id = "returnList" class = "btn" href="${pageContext.request.contextPath}/list.do" >목록</a>
+								
+								<c:if test = "${authUser.userNo == content.userNo}">
+									<a id = "edit" href = "${pageContext.request.contextPath}/editForm.do?contentNo=${content.contentNo}" class = "btn">수정</a>
+								</c:if>
+								
+								<c:if test="${authUser.userNo == 3 || authUser.userNo == content.userNo}">
+									<button id = "deletion" class = "btn">삭제</td>
+								</c:if>
+							</div>
 						</div>
 						
 					</div>
@@ -103,6 +111,22 @@
 </body>
 
 <script type = "text/javascript">
+
+$("#prePage").on("click", function(){
+	var prePage = ${content.prePage};
+	if(prePage == -1){
+		alert("이전 글이 없습니다.")
+		event.preventDefault();
+	}
+});
+
+$("#nextPage").on("click", function(){
+	var nextPage = ${content.nextPage};
+	if(prePage == -1){
+		alert("다음 글이 없습니다.")
+		event.preventDefault();
+	}
+});
 
 /*** 게시글 상세 화면을 호출하면서 동시에 해당 게시글의 댓글 리스트를 render함 ***/
 $(document).ready(function(){

@@ -139,8 +139,12 @@ public class BoardController {
 		String newLine = content.getContent().replace("\r\n", "<br>");
 		content.setContent(newLine);
 		
+		String fileName = content.getSaveName();
+		String extension = fileName.substring(fileName.lastIndexOf("."));
+		
 		model.addAttribute("content", content);
 		model.addAttribute("authUser", vo);
+		model.addAttribute("extension", extension);
 		
 		return "eGovBoard/readContent";
 	}
