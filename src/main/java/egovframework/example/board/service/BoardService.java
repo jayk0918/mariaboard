@@ -90,7 +90,7 @@ public interface BoardService {
 	
 	int updateHit(int contentNo) throws Exception;
 	
-	BoardVO getContent(int contentNo);
+	BoardVO getContent(BoardVO vo);
 	
 	int fileSave(BoardVO vo, MultipartFile file);
 	

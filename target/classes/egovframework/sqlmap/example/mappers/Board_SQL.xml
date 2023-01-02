@@ -149,27 +149,48 @@
 	</select>
 	
 	<!-- 상세페이지 내 이전 / 다음 글 조회 -->
-	<select id = "prePage" parameterType = "int" resultType = "int">
-		
+	<select id = "prePage" parameterType = "BoardVO" resultType = "int">
+		<![CDATA[
 		SELECT
 			IFNULL(MIN(content_no), -1) AS contentNo
 		FROM
 			board.contents
 		WHERE
-			content_no > #{content_no}
-			
+			content_no > #{contentNo}
+		]]>
+		
+		<if test="searchCategory == 1">
+			AND CONTENT_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchCategory == 2">
+			AND CONTENT_USER_NO = #{userNo}
+		</if>
+		<if test="searchCategory == 3">
+			AND CONTENT_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		
 	</select>
 	
-	<select id = "nextPage" parameterType = "int" resultType = "int">
+	<select id = "nextPage" parameterType = "BoardVO" resultType = "int">
 	
-	<![CDATA[
-		SELECT
-			IFNULL(MAX(content_no), -1) AS contentNo
-		FROM
-			board.contents
-		WHERE
-			content_no < #{content_no}
-	]]>
+		<![CDATA[
+			SELECT
+				IFNULL(MAX(content_no), -1) AS contentNo
+			FROM
+				board.contents
+			WHERE
+				content_no < #{contentNo}
+		]]>
+	
+		<if test="searchCategory == 1">
+			AND CONTENT_TITLE LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
+		<if test="searchCategory == 2">
+			AND CONTENT_USER_NO = #{userNo}
+		</if>
+		<if test="searchCategory == 3">
+			AND CONTENT_CONTENT LIKE CONCAT('%', #{searchKeyword}, '%')
+		</if>
 	
 	</select>
 	

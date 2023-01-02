@@ -127,24 +127,33 @@ public class BoardController {
 	
 	// 게시글 상세 조회
 	@GetMapping(value = "/readContent.do")
-	public String readContent(HttpSession session, @RequestParam int contentNo, Model model) throws Exception {
+	public String readContent(HttpSession session,
+							@RequestParam int contentNo,
+							Model model) throws Exception {
 		BoardVO vo = (BoardVO) session.getAttribute("authUser");
 		
 		// 조회수 +1
 		boardService.updateHit(contentNo);
 		
 		// 파라미터 contentNo에 맞는 게시글 조회 후 model에 저장
-		BoardVO content = boardService.getContent(contentNo);
+		BoardVO contentVO = new BoardVO();
+		contentVO.setContentNo(contentNo);
 		
+		BoardVO content = boardService.getContent(contentVO);
+		
+		// 개행처리
 		String newLine = content.getContent().replace("\r\n", "<br>");
 		content.setContent(newLine);
 		
+		// 파일 확장자 확인(이미지 파일일 경우 img태그로 미리보기 표시)
 		String fileName = content.getSaveName();
-		String extension = fileName.substring(fileName.lastIndexOf("."));
+		if(fileName != null) {
+			String extension = fileName.substring(fileName.lastIndexOf("."));
+			model.addAttribute("extension", extension);
+		}
 		
 		model.addAttribute("content", content);
 		model.addAttribute("authUser", vo);
-		model.addAttribute("extension", extension);
 		
 		return "eGovBoard/readContent";
 	}
@@ -154,7 +163,9 @@ public class BoardController {
 	public String getEditForm(@RequestParam int contentNo, Model model) throws IOException {
 		
 		// 기존에 작성된 내용도 조회하여 model에 저장
-		BoardVO content = boardService.getContent(contentNo);
+		BoardVO contentVO = new BoardVO();
+		contentVO.setContentNo(contentNo);
+		BoardVO content = boardService.getContent(contentVO);
 
 		model.addAttribute("content", content);
 		

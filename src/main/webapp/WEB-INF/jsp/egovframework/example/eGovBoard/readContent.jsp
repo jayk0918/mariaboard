@@ -66,7 +66,7 @@
 								</div>
 							</c:if>
 							<div class="downloadFile">
-								<a href = "/fileDownload.do?saveName=${content.saveName}">${content.saveName}</a>
+								<a href = "/fileDownload.do?saveName=${content.saveName}">파일 : ${content.saveName}</a>
 							</div>
 						</c:if>
 						
@@ -85,7 +85,7 @@
 								<a id = "nextPage" href = "${pageContext.request.contextPath}/readContent.do?contentNo=${content.nextPage}" class = "btn">다음</a>
 							</div>
 							<div id = "config">
-								<a id = "returnList" class = "btn" href="${pageContext.request.contextPath}/list.do" >목록</a>
+								<a id = "returnList" class = "btn" href="${pageContext.request.contextPath}/list.do">목록</a>
 								
 								<c:if test = "${authUser.userNo == content.userNo}">
 									<a id = "edit" href = "${pageContext.request.contextPath}/editForm.do?contentNo=${content.contentNo}" class = "btn">수정</a>
@@ -122,7 +122,7 @@ $("#prePage").on("click", function(){
 
 $("#nextPage").on("click", function(){
 	var nextPage = ${content.nextPage};
-	if(prePage == -1){
+	if(nextPage == -1){
 		alert("다음 글이 없습니다.")
 		event.preventDefault();
 	}

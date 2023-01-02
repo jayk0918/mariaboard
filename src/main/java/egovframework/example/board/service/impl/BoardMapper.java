@@ -102,9 +102,9 @@ public interface BoardMapper{
 	
 	List<BoardVO> getReplyList(int contentNo);
 	
-	int prePage(int contentNo);
+	int prePage(BoardVO vo);
 	
-	int nextPage(int contentNo);
+	int nextPage(BoardVO vo);
 	
 	int insertReply(BoardVO vo);
 	
